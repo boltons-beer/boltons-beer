@@ -1,6 +1,7 @@
 import { decodeBase64 } from 'jsr:@std/encoding/base64';
 
 export const enableDebugStats = booleanEnvVar('ENABLE_DEBUG_STATS');
+export const actionIntervalInMs = numberEnvVar('ACTION_INTERVAL_MS') ?? 2000;
 export const postmarkWebhookUsername = requiredStringEnvVar('POSTMARK_WEBHOOK_USERNAME');
 export const postmarkWebhookPassword = requiredStringEnvVar('POSTMARK_WEBHOOK_PASSWORD');
 export const deepseekApiKey = requiredStringEnvVar('DEEPSEEK_API_KEY');
@@ -19,6 +20,11 @@ function requiredStringEnvVar(varName: string): string {
 function booleanEnvVar(varName: string, defaultValue = false): boolean {
     const value = Deno.env.get(varName);
     return value ? Boolean(value) : defaultValue;
+}
+
+function numberEnvVar(varName: string): number | undefined {
+    const value = Deno.env.get(varName);
+    return value ? Number(value) : undefined;
 }
 
 function decodeB64EnvVarAsString(varName: string): string | undefined {

@@ -40,7 +40,7 @@ export const InboundEmail = z.object({
     MessageID: z.string(),
     ReplyTo: EmailAddress,
     MailboxHash: z.string(),
-    Date: z.string().datetime(),
+    Date: z.string(),
     TextBody: z.string().min(1),
     HtmlBody: z.string().optional(),
     StrippedTextReply: z.string().optional(),

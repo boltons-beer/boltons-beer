@@ -6,6 +6,7 @@ import { Client, CredentialManager, ok } from "npm:@atcute/client";
 import type {} from "npm:@atcute/atproto";
 
 import {
+  actionIntervalInMs,
   deepseekApiKey,
   enableDebugStats,
   postmarkWebhookPassword,
@@ -20,7 +21,11 @@ const openai = new OpenAI({
   apiKey: deepseekApiKey,
 });
 
-const bskyClientByEmail = new Map<string, Client>();
+type ATProtoData = { client: Client, did: string, pdsUri?: string };
+const atProtoDataByEmail = new Map<string, ATProtoData>();
+
+type QueueItem = { name: string, emailBody: string; prompt: string; atProtoData: ATProtoData };
+const actionQueue: QueueItem[] = [];
 
 type Stats = { emailsReceived: number; postsMade: number; errors: number };
 const runtimeStats: Stats & { employeeStats: Record<string, Stats> } = {
@@ -70,13 +75,13 @@ app.post(
     username: postmarkWebhookUsername,
     password: postmarkWebhookPassword,
   }),
-  zValidator("form", InboundEmail),
+  zValidator("json", InboundEmail),
   async (c) => {
     const {
       From: senderEmailAddress,
       OriginalRecipient: recipientEmailAddress,
       TextBody: emailBody,
-    } = c.req.valid("form");
+    } = c.req.valid("json");
 
     if (!emailBody) {
       console.warn(
@@ -107,7 +112,7 @@ app.post(
 
     // We can skip incrementing the overall stats for emailReceived since we had counted it just before
     incrementEmployeeStat(name, "emailsReceived", "skip-overall");
-    if (!bskyClientByEmail.has(recipientEmailAddress)) {
+    if (!atProtoDataByEmail.has(recipientEmailAddress)) {
       console.info(`Creating a new ATProto client session for: ${name}`);
       const manager = new CredentialManager({ service: "https://bsky.social" });
       const client = new Client({ handler: manager });
@@ -115,48 +120,97 @@ app.post(
         identifier: bskyIdentifier,
         password: bskyPassword,
       });
-      bskyClientByEmail.set(recipientEmailAddress, client);
+
+      if (!manager.session) {
+        console.warn(`No ATProto client session was created for: ${name}`);
+        incrementOverallStat("errors");
+        return c.json({}, 200);
+      }
+
+      atProtoDataByEmail.set(recipientEmailAddress, {
+        client,
+        did: manager.session.did,
+        pdsUri: manager.session.pdsUri,
+      });
     }
 
-    const client = bskyClientByEmail.get(recipientEmailAddress)!;
-    const completion = await openai.chat.completions.create({
-      model: "deepseek-chat",
-      messages: [{
-        role: "system",
-        content: `${prompt}\n${emailBody}`,
-      }],
+    const atProtoData = atProtoDataByEmail.get(recipientEmailAddress)!;
+    actionQueue.push({
+      name,
+      emailBody,
+      prompt,
+      atProtoData,
     });
 
-    const chatResponse = completion.choices[0].message.content;
-    if (!chatResponse) {
-      console.warn(`Unable to get a response from Deepseek for: ${name}`);
-      incrementEmployeeStat(name, "errors");
-      return c.json({}, 200);
-    }
-
-    const data = await ok(
-      client.post("com.atproto.repo.createRecord", {
-        input: {
-          collection: "app.bsky.",
-          repo: "app.bsky.feed.post",
-          record: {
-            "$type": "app.bsky.feed.post",
-            text: chatResponse,
-            langs: ["en"],
-            createdAt: new Date().toISOString(),
-          },
-        },
-      }),
-    );
-
-    if (data.validationStatus == "valid") {
-      incrementEmployeeStat(name, "errors");
-      return c.json({}, 200);
-    }
-
-    incrementEmployeeStat(name, "postsMade");
     return c.json({}, 201);
   },
 );
+
+setInterval(async () => {
+  const actionItem = actionQueue.shift();
+  if (!actionItem) {
+    console.log('No action items');
+    return;
+  }
+
+  const {
+    name,
+    atProtoData,
+    prompt,
+    emailBody,
+  } = actionItem;
+  const completion = await openai.chat.completions.create({
+    model: "deepseek-chat",
+    temperature: 0.5,
+    messages: [{
+      role: "system",
+      content: `${prompt}\n${emailBody}`,
+    }],
+  });
+
+  const chatResponse = completion.choices[0].message.content;
+  if (!chatResponse) {
+    console.warn(`Unable to get a response from Deepseek for: ${name}`);
+    incrementEmployeeStat(name, "errors");
+    return;
+  }
+
+  let postContents: string;
+  try {
+    const { response } = JSON.parse(chatResponse);
+    postContents = response;
+  } catch (e) {
+    console.error(`Unable to parse the response from Deepseek for: ${name}`, e);
+    incrementEmployeeStat(name, "errors");
+    return;
+  }
+
+  const {
+    client,
+    did,
+  } = atProtoData;
+
+  const data = await ok(
+    client.post("com.atproto.repo.createRecord", {
+      input: {
+        collection: "app.bsky.feed.post",
+        repo: did as unknown as any,
+        record: {
+          "$type": "app.bsky.feed.post",
+          text: postContents,
+          langs: ["en"],
+          createdAt: new Date().toISOString(),
+        },
+      },
+    }),
+  );
+
+  if (data.validationStatus == "valid") {
+    incrementEmployeeStat(name, "errors");
+    return;
+  }
+
+  incrementEmployeeStat(name, "postsMade");
+}, actionIntervalInMs);
 
 export default app;

@@ -2,7 +2,7 @@
   {
     "name": "Ian R. Moore",
     "email": "i.moore@boltons.beer",
-    "bskyHandle": "ian.boltons.beer",
+    "bskyIdentifier": "ian.boltons.beer",
     "bskyPassword": "totally-my-password",
     "jobDetails": [
       "Head of Marketing",
@@ -13,7 +13,8 @@
       "Feared, not respected",
       "Micromanager",
       "Ignorant of company history beyond what is widely known and accepted",
-      "Does not understand his Bluesky account is also tied to his company"
+      "Does not understand his Bluesky account is also tied to his company",
+      "Not very productive"
     ],
     "demographics": [
       "White",
