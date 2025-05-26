@@ -4,6 +4,7 @@ import OpenAI from "npm:openai";
 import { zValidator } from "npm:@hono/zod-validator";
 import { Client, CredentialManager, ok } from "npm:@atcute/client";
 import { openKvToolbox } from "jsr:@kitsonk/kv-toolbox";
+import { toBlob } from "@kitsonk/kv-toolbox/blob";
 import type {} from "npm:@atcute/atproto";
 
 import {
@@ -195,9 +196,9 @@ app.post(
     }
 
     const emailPromptId = crypto.randomUUID();
-    await kv.set([emailPromptId], `From: ${senderEmailAddress}\n${cc ? `CC: ${cc}\n` : ""}${
+    await kv.setBlob([emailPromptId], toBlob(`From: ${senderEmailAddress}\n${cc ? `CC: ${cc}\n` : ""}${
         cc ? `BCC: ${bcc}\n` : ""
-    }Subject: ${emailSubject}\nBody:\n\n${emailBody}`);
+    }Subject: ${emailSubject}\nBody:\n\n${emailBody}`));
 
     await kv.enqueue({
       name,
@@ -214,6 +215,7 @@ app.post(
 
 Deno.serve(app.fetch);
 
+const decoder = new TextDecoder();
 await kv.listenQueue(async (actionItem: QueueItem) => {
   const {
     name,
@@ -222,13 +224,14 @@ await kv.listenQueue(async (actionItem: QueueItem) => {
     emailPromptId,
   } = actionItem;
 
-  const { value: emailPrompt } = await kv.get<string>([emailPromptId]);
-  if (!emailPrompt) {
+  const { value: emailPromptBlob } = await kv.getBlob([emailPromptId]);
+  if (!emailPromptBlob) {
     console.warn(`Unable to find email prompt by id for: ${name}`);
     incrementEmployeeStat(name, "errors");
     return;
   }
 
+  const emailPrompt = decoder.decode(emailPromptBlob);
   await kv.delete([emailPromptId]);
 
   const atProtoData = atProtoDataByEmail.get(emailAddress)!;
