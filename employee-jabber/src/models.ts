@@ -38,7 +38,7 @@ export const InboundEmail = z.object({
     OriginalRecipient: EmailAddress,
     Subject: z.string(),
     MessageID: z.string(),
-    ReplyTo: EmailAddress,
+    ReplyTo: EmailAddress.optional(),
     MailboxHash: z.string(),
     Date: z.string(),
     TextBody: z.string().min(1),

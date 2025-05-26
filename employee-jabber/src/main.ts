@@ -21,10 +21,10 @@ const openai = new OpenAI({
   apiKey: deepseekApiKey,
 });
 
-type ATProtoData = { client: Client, did: string, pdsUri?: string };
+type ATProtoData = { client: Client; did: string; pdsUri?: string };
 const atProtoDataByEmail = new Map<string, ATProtoData>();
 
-type QueueItem = { name: string, emailBody: string; prompt: string; atProtoData: ATProtoData };
+type QueueItem = { name: string; prompt: string; atProtoData: ATProtoData };
 const actionQueue: QueueItem[] = [];
 
 type Stats = { emailsReceived: number; postsMade: number; errors: number };
@@ -80,9 +80,12 @@ app.post(
     const {
       From: senderEmailAddress,
       OriginalRecipient: recipientEmailAddress,
-      TextBody: emailBody,
+      Subject: emailSubject,
+      TextBody: emailTextBody,
+      HtmlBody: emailHtmlBody,
     } = c.req.valid("json");
 
+    const emailBody = emailHtmlBody ?? emailTextBody;
     if (!emailBody) {
       console.warn(
         `Email from ${senderEmailAddress} was sent with an empty body`,
@@ -137,9 +140,9 @@ app.post(
     const atProtoData = atProtoDataByEmail.get(recipientEmailAddress)!;
     actionQueue.push({
       name,
-      emailBody,
-      prompt,
       atProtoData,
+      prompt:
+        `${prompt}\nFrom: ${senderEmailAddress}\nSubject: ${emailSubject}\nBody:\n\n${emailBody}`,
     });
 
     return c.json({}, 201);
@@ -149,7 +152,7 @@ app.post(
 setInterval(async () => {
   const actionItem = actionQueue.shift();
   if (!actionItem) {
-    console.log('No action items');
+    console.log("No action items");
     return;
   }
 
@@ -157,14 +160,13 @@ setInterval(async () => {
     name,
     atProtoData,
     prompt,
-    emailBody,
   } = actionItem;
   const completion = await openai.chat.completions.create({
     model: "deepseek-chat",
     temperature: 0.5,
     messages: [{
       role: "system",
-      content: `${prompt}\n${emailBody}`,
+      content: prompt,
     }],
   });
 

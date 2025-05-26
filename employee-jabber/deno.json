@@ -1,7 +1,8 @@
 {
   "version": "0.1.0",
   "tasks": {
-    "dev": "deno run --watch src/main.ts"
+    "dev": "deno run --watch src/main.ts",
+    "push-secrets": "deno run -A ../tooling/env-to-fly-secrets.ts --i .env"
   },
   "imports": {
     "@atcute/atproto": "npm:@atcute/atproto@^3.0.2",
