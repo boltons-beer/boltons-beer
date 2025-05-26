@@ -12,4 +12,4 @@ COPY deno.lock .
 RUN deno cache src/main.ts
 
 # Run the app
-CMD ["deno", "serve", "--allow-net", "--allow-env", "--unstable-kv", "src/main.ts"]
+CMD ["deno", "run", "--allow-net", "--allow-env", "--unstable-kv", "src/main.ts"]

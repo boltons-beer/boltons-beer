@@ -11,7 +11,7 @@ primary_region = 'ewr'
 [env]
 
 [processes]
-  app = 'serve --allow-net --allow-env --unstable-kv ./src/main.ts'
+  app = 'run --allow-net --allow-env --unstable-kv ./src/main.ts'
 
 [http_service]
   internal_port = 8000

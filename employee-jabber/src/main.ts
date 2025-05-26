@@ -3,6 +3,7 @@ import { basicAuth } from "npm:hono/basic-auth";
 import OpenAI from "npm:openai";
 import { zValidator } from "npm:@hono/zod-validator";
 import { Client, CredentialManager, ok } from "npm:@atcute/client";
+import { openKvToolbox } from "jsr:@kitsonk/kv-toolbox";
 import type {} from "npm:@atcute/atproto";
 
 import {
@@ -38,9 +39,9 @@ type QueueItem = {
   name: string;
   emailAddress: string;
   systemPrompt: string;
-  emailPrompt: string;
+  emailPromptId: string;
 };
-const kv = await Deno.openKv();
+const kv = await openKvToolbox({ path: ":memory:" });
 
 type Stats = { emailsReceived: number; postsMade: number; errors: number };
 const runtimeStats: Stats & { employeeStats: Record<string, Stats> } = {
@@ -193,13 +194,16 @@ app.post(
       });
     }
 
+    const emailPromptId = crypto.randomUUID();
+    await kv.set([emailPromptId], `From: ${senderEmailAddress}\n${cc ? `CC: ${cc}\n` : ""}${
+        cc ? `BCC: ${bcc}\n` : ""
+    }Subject: ${emailSubject}\nBody:\n\n${emailBody}`);
+
     await kv.enqueue({
       name,
       emailAddress: recipientEmailAddress,
       systemPrompt: prompt,
-      emailPrompt: `From: ${senderEmailAddress}\n${cc ? `CC: ${cc}\n` : ""}${
-        cc ? `BCC: ${bcc}\n` : ""
-      }Subject: ${emailSubject}\nBody:\n\n${emailBody}`,
+      emailPromptId: emailPromptId,
     }, {
       delay: randomIntFromInterval(minActionDelayInMs, maxActionDelayInMs),
     });
@@ -208,13 +212,24 @@ app.post(
   },
 );
 
-kv.listenQueue(async (actionItem: QueueItem) => {
+Deno.serve(app.fetch);
+
+await kv.listenQueue(async (actionItem: QueueItem) => {
   const {
     name,
     emailAddress,
     systemPrompt,
-    emailPrompt,
+    emailPromptId,
   } = actionItem;
+
+  const { value: emailPrompt } = await kv.get<string>([emailPromptId]);
+  if (!emailPrompt) {
+    console.warn(`Unable to find email prompt by id for: ${name}`);
+    incrementEmployeeStat(name, "errors");
+    return;
+  }
+
+  await kv.delete([emailPromptId]);
 
   const atProtoData = atProtoDataByEmail.get(emailAddress)!;
   const conversationHistory = conversationsByEmail.get(emailAddress) ?? [{
@@ -284,5 +299,3 @@ kv.listenQueue(async (actionItem: QueueItem) => {
 
   incrementEmployeeStat(name, "postsMade");
 });
-
-export default app;
