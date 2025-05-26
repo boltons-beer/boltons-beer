@@ -277,7 +277,7 @@ kv.listenQueue(async (actionItem: QueueItem) => {
     }),
   );
 
-  if (data.validationStatus == "valid") {
+  if (data.validationStatus !== "valid") {
     incrementEmployeeStat(name, "errors");
     return;
   }
