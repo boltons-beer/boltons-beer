@@ -6,26 +6,41 @@ import { Client, CredentialManager, ok } from "npm:@atcute/client";
 import type {} from "npm:@atcute/atproto";
 
 import {
-  actionIntervalInMs,
   deepseekApiKey,
+  enabledDebugATProto,
+  enabledDebugConversations,
   enableDebugStats,
+  maxActionDelayInMs,
+  minActionDelayInMs,
   postmarkWebhookPassword,
   postmarkWebhookUsername,
 } from "./env.ts";
 
 import { employeeByEmail } from "./employees.ts";
 import { EmployeeWithPrompt, InboundEmail } from "./models.ts";
+import { randomIntFromInterval } from "./utils.ts";
 
 const openai = new OpenAI({
   baseURL: "https://api.deepseek.com",
   apiKey: deepseekApiKey,
 });
 
+type ChatMessage = {
+  role: "assistant" | "user" | "system";
+  content: string;
+};
+const conversationsByEmail = new Map<string, ChatMessage[]>();
+
 type ATProtoData = { client: Client; did: string; pdsUri?: string };
 const atProtoDataByEmail = new Map<string, ATProtoData>();
 
-type QueueItem = { name: string; prompt: string; atProtoData: ATProtoData };
-const actionQueue: QueueItem[] = [];
+type QueueItem = {
+  name: string;
+  emailAddress: string;
+  systemPrompt: string;
+  emailPrompt: string;
+};
+const kv = await Deno.openKv();
 
 type Stats = { emailsReceived: number; postsMade: number; errors: number };
 const runtimeStats: Stats & { employeeStats: Record<string, Stats> } = {
@@ -61,12 +76,51 @@ function incrementEmployeeStat(
 const app = new Hono();
 
 if (enableDebugStats) {
-  app.get("/", (c) =>
+  app.get("/debug/stats", (c) =>
     c.json({
       "//":
         "These are the stats from this instance, they do not persist between restarts. This is just for debugging purposes.",
       ...runtimeStats,
     }));
+}
+
+if (enabledDebugConversations) {
+  app.get("/debug/convos", (c) => {
+    const conversationsByName: Record<string, ChatMessage[]> = {};
+    for (const [email, conversation] of conversationsByEmail) {
+      const { name } = employeeByEmail.get(email)!;
+      conversationsByName[name] = conversation;
+    }
+
+    return c.json({
+      "//":
+        "These are the conversations from this instance, they do not persist between restarts. This is just for debugging purposes.",
+      ...conversationsByName,
+    });
+  });
+}
+
+if (enabledDebugATProto) {
+  app.get("/debug/atproto", (c) => {
+    const atProtoDataByName: Record<
+      string,
+      Pick<ATProtoData, "did" | "pdsUri">
+    > = {};
+    for (const [email, atProtoData] of atProtoDataByEmail) {
+      const { name } = employeeByEmail.get(email)!;
+      const { did, pdsUri } = atProtoData;
+      atProtoDataByName[name] = {
+        did,
+        pdsUri,
+      };
+    }
+
+    return c.json({
+      "//":
+        "This is the various in-use ATProto data from this instance, they do not persist between restarts. This is just for debugging purposes.",
+      ...atProtoDataByName,
+    });
+  });
 }
 
 app.post(
@@ -83,6 +137,8 @@ app.post(
       Subject: emailSubject,
       TextBody: emailTextBody,
       HtmlBody: emailHtmlBody,
+      Bcc: bcc,
+      Cc: cc,
     } = c.req.valid("json");
 
     const emailBody = emailHtmlBody ?? emailTextBody;
@@ -137,37 +193,43 @@ app.post(
       });
     }
 
-    const atProtoData = atProtoDataByEmail.get(recipientEmailAddress)!;
-    actionQueue.push({
+    await kv.enqueue({
       name,
-      atProtoData,
-      prompt:
-        `${prompt}\nFrom: ${senderEmailAddress}\nSubject: ${emailSubject}\nBody:\n\n${emailBody}`,
+      emailAddress: recipientEmailAddress,
+      systemPrompt: prompt,
+      emailPrompt: `From: ${senderEmailAddress}\n${cc ? `CC: ${cc}\n` : ""}${
+        cc ? `BCC: ${bcc}\n` : ""
+      }Subject: ${emailSubject}\nBody:\n\n${emailBody}`,
+    }, {
+      delay: randomIntFromInterval(minActionDelayInMs, maxActionDelayInMs),
     });
 
     return c.json({}, 201);
   },
 );
 
-setInterval(async () => {
-  const actionItem = actionQueue.shift();
-  if (!actionItem) {
-    console.log("No action items");
-    return;
-  }
-
+kv.listenQueue(async (actionItem: QueueItem) => {
   const {
     name,
-    atProtoData,
-    prompt,
+    emailAddress,
+    systemPrompt,
+    emailPrompt,
   } = actionItem;
+
+  const atProtoData = atProtoDataByEmail.get(emailAddress)!;
+  const conversationHistory = conversationsByEmail.get(emailAddress) ?? [{
+    role: "system",
+    content: systemPrompt,
+  }];
+  conversationHistory.push({
+    role: "user",
+    content: emailPrompt,
+  });
+
   const completion = await openai.chat.completions.create({
-    model: "deepseek-chat",
-    temperature: 0.5,
-    messages: [{
-      role: "system",
-      content: prompt,
-    }],
+    model: "deepseek-reasoner",
+    temperature: randomIntFromInterval(0.01, 0.6),
+    messages: conversationHistory,
   });
 
   const chatResponse = completion.choices[0].message.content;
@@ -176,6 +238,14 @@ setInterval(async () => {
     incrementEmployeeStat(name, "errors");
     return;
   }
+
+  conversationsByEmail.set(emailAddress, [
+    ...conversationHistory,
+    {
+      role: "assistant",
+      content: chatResponse,
+    },
+  ]);
 
   let postContents: string;
   try {
@@ -213,6 +283,6 @@ setInterval(async () => {
   }
 
   incrementEmployeeStat(name, "postsMade");
-}, actionIntervalInMs);
+});
 
 export default app;
