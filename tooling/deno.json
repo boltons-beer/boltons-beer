@@ -1,0 +1,8 @@
+{
+  "version": "0.1.0",
+  "tasks": {},
+  "imports": {
+    "@std/cli": "jsr:@std/cli@^1.0.17",
+    "@std/encoding": "jsr:@std/encoding@^1.0.10"
+  }
+}

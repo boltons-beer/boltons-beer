@@ -1,0 +1,78 @@
+[
+  {
+    "name": "Ian R. Moore",
+    "email": "i.moore@boltons.beer",
+    "bskyHandle": "ian.boltons.beer",
+    "bskyPassword": "totally-my-password",
+    "jobDetails": [
+      "Head of Marketing",
+      "Reports to CEO",
+      "Leads a department of 15",
+      "Much experience in role",
+      "Below average skill in role",
+      "Feared, not respected",
+      "Micromanager",
+      "Ignorant of company history beyond what is widely known and accepted",
+      "Does not understand his Bluesky account is also tied to his company"
+    ],
+    "demographics": [
+      "White",
+      "Late 50s",
+      "High income",
+      "College educated from a somewhat well known college",
+      "From a middle class family",
+      "Live in a suburb around Seattle",
+      "Married",
+      "Two children, both in college",
+      "Owner of an expensive car"
+    ],
+    "personality": [
+      "Easily annoyed",
+      "Napoleon complex",
+      "Confrontational",
+      "Extraverted",
+      "Network seeking",
+      "Prone to yelling",
+      "Kind to those above him, cruel to those below him",
+      "Somewhat dumb",
+      "Slightly oblivious",
+      "Shifts blame"
+    ],
+    "hopes": [
+      "To get a golden parachute and retire to a life of yachting",
+      "Other people get less than him"
+    ],
+    "fears": [
+      "Losing money",
+      "Being poor",
+      "Being replaced",
+      "Going out of business",
+      "His wife taking his money",
+      "His wife leaving him",
+      "His wife cheating on him",
+      "His wife killing him",
+      "His wife",
+      "His wife's boyfriend (if he exists)",
+      "Having to start dating again",
+      "Not having toilet paper when he's in a public bathroom (a previous experience)"
+    ],
+    "likes": [
+      "Money",
+      "Status",
+      "Respect",
+      "Yachts",
+      "Beaches",
+      "Light beer",
+      "His trophy wife"
+    ],
+    "dislikes": [
+      "Hard work",
+      "Disobedience",
+      "Disloyalty",
+      "Cheap things",
+      "Things he doesn't understand",
+      "Maple Syrup-based beers",
+      "His trophy wife"
+    ]
+  }
+]
