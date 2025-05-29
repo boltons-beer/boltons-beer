@@ -1,587 +1,682 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book a Tour - Bolton's Vermont Distilling Company</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    >
     <style>
-        /* Additional styles for the tours page */
-        .tours-hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/distillery-tour-hero.jpg') no-repeat center center/cover;
-            color: white;
-            text-align: center;
-            padding: 8rem 1rem;
-            position: relative;
-        }
-        
-        .tours-hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        
-        .tours-hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        }
-        
+      /* Additional styles for the tours page */
+      .tours-hero {
+        background:
+          linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+          url("images/distillery-tour-hero.jpg") no-repeat center
+          center/cover;
+        color: white;
+        text-align: center;
+        padding: 8rem 1rem;
+        position: relative;
+      }
+
+      .tours-hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .tours-hero p {
+        font-size: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto 2rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      }
+
+      .booking-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        margin: 4rem auto;
+        max-width: 1200px;
+        padding: 0 1rem;
+      }
+
+      .tour-options {
+        background-color: var(--color-light-gray);
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .tour-option {
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .tour-option:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .tour-option h3 {
+        color: var(--color-maple-red);
+        margin-bottom: 0.5rem;
+      }
+
+      .tour-meta {
+        display: flex;
+        gap: 1.5rem;
+        margin: 0.8rem 0;
+        color: var(--color-text-light);
+        font-size: 0.9rem;
+      }
+
+      .tour-meta span {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+
+      .tour-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--color-maple-orange);
+        margin: 1rem 0;
+      }
+
+      .booking-form-container {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 2rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--color-text);
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--color-maple-orange);
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .form-actions {
+        margin-top: 2rem;
+      }
+
+      .btn-submit {
+        background-color: var(--color-maple-red);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.3s;
+      }
+
+      .btn-submit:hover {
+        background-color: var(--color-maple-orange);
+      }
+
+      .tour-highlights {
+        background-color: var(--color-light-gray);
+        padding: 4rem 0;
+      }
+
+      .highlights-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .highlight-card {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s;
+      }
+
+      .highlight-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .highlight-icon {
+        font-size: 2.5rem;
+        color: var(--color-maple-orange);
+        margin-bottom: 1rem;
+      }
+
+      .highlight-card h3 {
+        color: var(--color-maple-red);
+        margin-bottom: 1rem;
+      }
+
+      .faq-section {
+        padding: 4rem 0;
+      }
+
+      .faq-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .faq-item {
+        margin-bottom: 1rem;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .faq-question {
+        padding: 1.5rem;
+        background-color: white;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500;
+        transition: background-color 0.3s;
+      }
+
+      .faq-question:hover {
+        background-color: #f9f9f9;
+      }
+
+      .faq-question::after {
+        content: "+";
+        font-size: 1.5rem;
+        color: var(--color-maple-orange);
+      }
+
+      .faq-item.active .faq-question::after {
+        content: "-";
+      }
+
+      .faq-answer {
+        padding: 0 1.5rem;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out, padding 0.3s ease;
+        background-color: white;
+      }
+
+      .faq-item.active .faq-answer {
+        padding: 0 1.5rem 1.5rem;
+        max-height: 500px;
+      }
+
+      @media (max-width: 992px) {
         .booking-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            margin: 4rem auto;
-            max-width: 1200px;
-            padding: 0 1rem;
+          grid-template-columns: 1fr;
         }
-        
-        .tour-options {
-            background-color: var(--color-light-gray);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .tour-option {
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .tour-option:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        
-        .tour-option h3 {
-            color: var(--color-maple-red);
-            margin-bottom: 0.5rem;
-        }
-        
-        .tour-meta {
-            display: flex;
-            gap: 1.5rem;
-            margin: 0.8rem 0;
-            color: var(--color-text-light);
-            font-size: 0.9rem;
-        }
-        
-        .tour-meta span {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-        
-        .tour-price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--color-maple-orange);
-            margin: 1rem 0;
-        }
-        
+
         .booking-form-container {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 2rem;
+          position: static;
         }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--color-text);
-        }
-        
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--color-maple-orange);
-        }
-        
+      }
+
+      @media (max-width: 576px) {
         .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+          grid-template-columns: 1fr;
         }
-        
-        .form-actions {
-            margin-top: 2rem;
+
+        .tours-hero h1 {
+          font-size: 2.5rem;
         }
-        
-        .btn-submit {
-            background-color: var(--color-maple-red);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            transition: background-color 0.3s;
-        }
-        
-        .btn-submit:hover {
-            background-color: var(--color-maple-orange);
-        }
-        
-        .tour-highlights {
-            background-color: var(--color-light-gray);
-            padding: 4rem 0;
-        }
-        
-        .highlights-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .highlight-card {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-        }
-        
-        .highlight-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .highlight-icon {
-            font-size: 2.5rem;
-            color: var(--color-maple-orange);
-            margin-bottom: 1rem;
-        }
-        
-        .highlight-card h3 {
-            color: var(--color-maple-red);
-            margin-bottom: 1rem;
-        }
-        
-        .faq-section {
-            padding: 4rem 0;
-        }
-        
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .faq-item {
-            margin-bottom: 1rem;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .faq-question {
-            padding: 1.5rem;
-            background-color: white;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 500;
-            transition: background-color 0.3s;
-        }
-        
-        .faq-question:hover {
-            background-color: #f9f9f9;
-        }
-        
-        .faq-question::after {
-            content: '+';
-            font-size: 1.5rem;
-            color: var(--color-maple-orange);
-        }
-        
-        .faq-item.active .faq-question::after {
-            content: '-';
-        }
-        
-        .faq-answer {
-            padding: 0 1.5rem;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out, padding 0.3s ease;
-            background-color: white;
-        }
-        
-        .faq-item.active .faq-answer {
-            padding: 0 1.5rem 1.5rem;
-            max-height: 500px;
-        }
-        
-        @media (max-width: 992px) {
-            .booking-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .booking-form-container {
-                position: static;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .tours-hero h1 {
-                font-size: 2.5rem;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header class="site-header">
-        <div class="container">
-            <div class="logo">
-                <h1>Bolton's</h1>
-                <p>Vermont Distilling Company</p>
-            </div>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="products.html">Our Beers</a></li>
-                    <li><a href="about.html">Our Story</a></li>
-                    <li><a href="members.html">Owners</a></li>
-                    <li><a href="tours.html" class="btn active">Book a Tour</a></li>
-                </ul>
-            </nav>
+      <div class="container">
+        <div class="logo">
+          <h1>Bolton's</h1>
+          <p>Vermont Distilling Company</p>
         </div>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Our Beers</a></li>
+            <li><a href="about.html">Our Story</a></li>
+            <li><a href="members.html">Owners</a></li>
+            <li><a href="tours.html" class="btn active">Book a Tour</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
 
     <main>
-        <section class="tours-hero">
-            <h1>Experience Bolton's Distillery</h1>
-            <p>Join us for an unforgettable journey through our historic distillery and taste the craftsmanship behind Vermont's finest maple-infused beers.</p>
-            <a href="#book-now" class="btn btn-large">Book Your Tour</a>
-        </section>
+      <section class="tours-hero">
+        <h1>Experience Bolton's Distillery</h1>
+        <p>
+          Join us for an unforgettable journey through our historic distillery
+          and taste the craftsmanship behind Vermont's finest maple-infused
+          beers.
+        </p>
+        <a href="#book-now" class="btn btn-large">Book Your Tour</a>
+      </section>
 
-        <div class="booking-container" id="book-now">
-            <div class="tour-options">
-                <h2 class="section-title">Tour Options</h2>
-                
-                <div class="tour-option">
-                    <h3>Classic Tasting Tour</h3>
-                    <p>Discover the art of maple-infused brewing with our signature distillery tour and tasting experience.</p>
-                    <div class="tour-meta">
-                        <span><i class="far fa-clock"></i> 1.5 hours</span>
-                        <span><i class="fas fa-users"></i> Max 12 people</span>
-                        <span><i class="fas fa-walking"></i> Moderate walking</span>
-                    </div>
-                    <div class="tour-price">$25 per person</div>
-                    <ul class="tour-includes">
-                        <li>Guided tour of our historic distillery</li>
-                        <li>Learn about our maple syrup sourcing</li>
-                        <li>Sampling of 4 signature beers</li>
-                        <li>10% discount on purchases in our gift shop</li>
-                    </ul>
-                </div>
-                
-                <div class="tour-option">
-                    <h3>Maple Masterclass</h3>
-                    <p>Dive deeper into the world of maple with our premium tasting experience and food pairing.</p>
-                    <div class="tour-meta">
-                        <span><i class="far fa-clock"></i> 2.5 hours</span>
-                        <span><i class="fas fa-users"></i> Max 8 people</span>
-                        <span><i class="fas fa-utensils"></i> Food pairing included</span>
-                    </div>
-                    <div class="tour-price">$65 per person</div>
-                    <ul class="tour-includes">
-                        <li>In-depth distillery tour with our master brewer</li>
-                        <li>Exclusive tastings of limited-edition beers</li>
-                        <li>Artisanal cheese and charcuterie pairing</li>
-                        <li>Take-home souvenir glass</li>
-                        <li>15% discount on purchases in our gift shop</li>
-                    </ul>
-                </div>
-                
-                <div class="tour-option">
-                    <h3>Private Group Experience</h3>
-                    <p>Enjoy a personalized tour and tasting for your group of 8 or more.</p>
-                    <div class="tour-meta">
-                        <span><i class="far fa-clock"></i> 2 hours</span>
-                        <span><i class="fas fa-users"></i> 8-20 people</span>
-                        <span><i class="fas fa-star"></i> Private experience</span>
-                    </div>
-                    <div class="tour-price">$400 per group</div>
-                    <ul class="tour-includes">
-                        <li>Private guided tour of the distillery</li>
-                        <li>Exclusive tasting of 6 different beers</li>
-                        <li>Personalized attention from our staff</li>
-                        <li>Commemorative group photo</li>
-                        <li>10% discount on purchases in our gift shop</li>
-                    </ul>
-                </div>
+      <div class="booking-container" id="book-now">
+        <div class="tour-options">
+          <h2 class="section-title">Tour Options</h2>
+
+          <div class="tour-option">
+            <h3>Classic Tasting Tour</h3>
+            <p>
+              Discover the art of maple-infused brewing with our signature
+              distillery tour and tasting experience.
+            </p>
+            <div class="tour-meta">
+              <span><i class="far fa-clock"></i> 1.5 hours</span>
+              <span><i class="fas fa-users"></i> Max 12 people</span>
+              <span><i class="fas fa-walking"></i> Moderate walking</span>
             </div>
-            
-            <div class="booking-form-container">
-                <h2 class="section-title">Book Your Tour</h2>
-                <p>Please fill out the form below to reserve your spot. A confirmation will be sent to your email.</p>
-                
-                <form id="tour-booking-form" class="booking-form">
-                    <div class="form-group">
-                        <label for="tour-type">Select Tour</label>
-                        <select id="tour-type" name="tour-type" required>
-                            <option value="" disabled selected>Choose a tour</option>
-                            <option value="classic">Classic Tasting Tour - $25/person</option>
-                            <option value="masterclass">Maple Masterclass - $65/person</option>
-                            <option value="private">Private Group Experience - $400/group</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="tour-date">Tour Date</label>
-                        <input type="date" id="tour-date" name="tour-date" min="2023-11-01" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="tour-time">Preferred Time</label>
-                        <select id="tour-time" name="tour-time" required>
-                            <option value="" disabled selected>Select a time</option>
-                            <option value="10:00">10:00 AM</option>
-                            <option value="12:00">12:00 PM</option>
-                            <option value="14:00">2:00 PM</option>
-                            <option value="16:00">4:00 PM (Weekends only)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="party-size">Number of People</label>
-                        <input type="number" id="party-size" name="party-size" min="1" max="20" value="2" required>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="first-name">First Name</label>
-                            <input type="text" id="first-name" name="first-name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="last-name">Last Name</label>
-                            <input type="text" id="last-name" name="last-name" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="special-requests">Special Requests</label>
-                        <textarea id="special-requests" name="special-requests" rows="3"></textarea>
-                    </div>
-                    
-                    <div class="form-group form-checkbox">
-                        <input type="checkbox" id="terms" name="terms" required>
-                        <label for="terms">I agree to the <a href="#">terms and conditions</a> and understand that I must be 21+ to participate in alcohol tastings.</label>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="submit" class="btn-submit">Reserve Now</button>
-                    </div>
-                </form>
+            <div class="tour-price">$25 per person</div>
+            <ul class="tour-includes">
+              <li>Guided tour of our historic distillery</li>
+              <li>Learn about our maple syrup sourcing</li>
+              <li>Sampling of 4 signature beers</li>
+              <li>10% discount on purchases in our gift shop</li>
+            </ul>
+          </div>
+
+          <div class="tour-option">
+            <h3>Maple Masterclass</h3>
+            <p>
+              Dive deeper into the world of maple with our premium tasting
+              experience and food pairing.
+            </p>
+            <div class="tour-meta">
+              <span><i class="far fa-clock"></i> 2.5 hours</span>
+              <span><i class="fas fa-users"></i> Max 8 people</span>
+              <span><i class="fas fa-utensils"></i> Food pairing included</span>
             </div>
+            <div class="tour-price">$65 per person</div>
+            <ul class="tour-includes">
+              <li>In-depth distillery tour with our master brewer</li>
+              <li>Exclusive tastings of limited-edition beers</li>
+              <li>Artisanal cheese and charcuterie pairing</li>
+              <li>Take-home souvenir glass</li>
+              <li>15% discount on purchases in our gift shop</li>
+            </ul>
+          </div>
+
+          <div class="tour-option">
+            <h3>Private Group Experience</h3>
+            <p>
+              Enjoy a personalized tour and tasting for your group of 8 or more.
+            </p>
+            <div class="tour-meta">
+              <span><i class="far fa-clock"></i> 2 hours</span>
+              <span><i class="fas fa-users"></i> 8-20 people</span>
+              <span><i class="fas fa-star"></i> Private experience</span>
+            </div>
+            <div class="tour-price">$400 per group</div>
+            <ul class="tour-includes">
+              <li>Private guided tour of the distillery</li>
+              <li>Exclusive tasting of 6 different beers</li>
+              <li>Personalized attention from our staff</li>
+              <li>Commemorative group photo</li>
+              <li>10% discount on purchases in our gift shop</li>
+            </ul>
+          </div>
         </div>
-        
-        <section class="tour-highlights">
-            <div class="container">
-                <h2 class="section-title text-center">Tour Highlights</h2>
-                
-                <div class="highlights-grid">
-                    <div class="highlight-card">
-                        <div class="highlight-icon">🍁</div>
-                        <h3>Maple Sourcing</h3>
-                        <p>Learn how we source the finest Vermont maple syrup for our unique brews.</p>
-                    </div>
-                    
-                    <div class="highlight-card">
-                        <div class="highlight-icon">🍺</div>
-                        <h3>Brewing Process</h3>
-                        <p>Discover our traditional brewing methods that have been perfected over generations.</p>
-                    </div>
-                    
-                    <div class="highlight-card">
-                        <div class="highlight-icon">👨‍🍳</div>
-                        <h3>Expert Guidance</h3>
-                        <p>Our knowledgeable guides will walk you through every step of the process.</p>
-                    </div>
-                    
-                    <div class="highlight-card">
-                        <div class="highlight-icon">👃</div>
-                        <h3>Aroma & Tasting</h3>
-                        <p>Develop your palate with our guided tasting sessions.</p>
-                    </div>
-                </div>
+
+        <div class="booking-form-container">
+          <h2 class="section-title">Book Your Tour</h2>
+          <p>
+            Please fill out the form below to reserve your spot. A confirmation
+            will be sent to your email.
+          </p>
+
+          <form id="tour-booking-form" class="booking-form">
+            <div class="form-group">
+              <label for="tour-type">Select Tour</label>
+              <select id="tour-type" name="tour-type" required>
+                <option value="" disabled selected>Choose a tour</option>
+                <option value="classic">
+                  Classic Tasting Tour - $25/person
+                </option>
+                <option value="masterclass">
+                  Maple Masterclass - $65/person
+                </option>
+                <option value="private">
+                  Private Group Experience - $400/group
+                </option>
+              </select>
             </div>
-        </section>
-        
-        <section class="faq-section">
-            <div class="container">
-                <h2 class="section-title text-center">Frequently Asked Questions</h2>
-                
-                <div class="faq-container">
-                    <div class="faq-item">
-                        <div class="faq-question">What should I bring to the tour?</div>
-                        <div class="faq-answer">
-                            <p>Please bring a valid photo ID showing you are 21 or older. We recommend wearing comfortable shoes as the tour involves walking and standing. You may also want to bring a camera to capture the beautiful distillery.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">Is there parking available?</div>
-                        <div class="faq-answer">
-                            <p>Yes, we have free parking available on-site for all tour guests. If you're using a rideshare service, please use our main entrance for drop-off and pick-up.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">Are tours suitable for children?</div>
-                        <div class="faq-answer">
-                            <p>While we welcome visitors of all ages, our tours are designed for adults 21 and over. Children must be accompanied by an adult at all times, and please note that only guests 21+ will be served alcohol during tastings.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">What is your cancellation policy?</div>
-                        <div class="faq-answer">
-                            <p>We understand plans change. You can cancel or reschedule your tour up to 24 hours in advance for a full refund. For groups of 6 or more, we require 48 hours' notice for cancellations or changes.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">Do you offer tours for people with disabilities?</div>
-                        <div class="faq-answer">
-                            <p>Yes, our facility is wheelchair accessible, and we're happy to accommodate guests with disabilities. Please let us know in advance if you have any specific needs so we can ensure you have the best experience possible.</p>
-                        </div>
-                    </div>
-                </div>
+
+            <div class="form-group">
+              <label for="tour-date">Tour Date</label>
+              <input
+                type="date"
+                id="tour-date"
+                name="tour-date"
+                min="2023-11-01"
+                required
+              >
             </div>
-        </section>
-        
-        <section class="cta">
-            <div class="container">
-                <h2>Ready to Experience Bolton's?</h2>
-                <p>Book your tour today and discover the art of maple-infused brewing.</p>
-                <a href="#book-now" class="btn btn-large">Book Your Tour</a>
+
+            <div class="form-group">
+              <label for="tour-time">Preferred Time</label>
+              <select id="tour-time" name="tour-time" required>
+                <option value="" disabled selected>Select a time</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="12:00">12:00 PM</option>
+                <option value="14:00">2:00 PM</option>
+                <option value="16:00">4:00 PM (Weekends only)</option>
+              </select>
             </div>
-        </section>
+
+            <div class="form-group">
+              <label for="party-size">Number of People</label>
+              <input
+                type="number"
+                id="party-size"
+                name="party-size"
+                min="1"
+                max="20"
+                value="2"
+                required
+              >
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" name="first-name" required>
+              </div>
+              <div class="form-group">
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" name="last-name" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <div class="form-group">
+              <label for="special-requests">Special Requests</label>
+              <textarea
+                id="special-requests"
+                name="special-requests"
+                rows="3"
+              ></textarea>
+            </div>
+
+            <div class="form-group form-checkbox">
+              <input type="checkbox" id="terms" name="terms" required>
+              <label for="terms"
+              >I agree to the <a href="#">terms and conditions</a> and
+                understand that I must be 21+ to participate in alcohol
+                tastings.</label>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-submit">Reserve Now</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <section class="tour-highlights">
+        <div class="container">
+          <h2 class="section-title text-center">Tour Highlights</h2>
+
+          <div class="highlights-grid">
+            <div class="highlight-card">
+              <div class="highlight-icon">🍁</div>
+              <h3>Maple Sourcing</h3>
+              <p>
+                Learn how we source the finest Vermont maple syrup for our
+                unique brews.
+              </p>
+            </div>
+
+            <div class="highlight-card">
+              <div class="highlight-icon">🍺</div>
+              <h3>Brewing Process</h3>
+              <p>
+                Discover our traditional brewing methods that have been
+                perfected over generations.
+              </p>
+            </div>
+
+            <div class="highlight-card">
+              <div class="highlight-icon">👨‍🍳</div>
+              <h3>Expert Guidance</h3>
+              <p>
+                Our knowledgeable guides will walk you through every step of the
+                process.
+              </p>
+            </div>
+
+            <div class="highlight-card">
+              <div class="highlight-icon">👃</div>
+              <h3>Aroma & Tasting</h3>
+              <p>Develop your palate with our guided tasting sessions.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="faq-section">
+        <div class="container">
+          <h2 class="section-title text-center">Frequently Asked Questions</h2>
+
+          <div class="faq-container">
+            <div class="faq-item">
+              <div class="faq-question">What should I bring to the tour?</div>
+              <div class="faq-answer">
+                <p>
+                  Please bring a valid photo ID showing you are 21 or older. We
+                  recommend wearing comfortable shoes as the tour involves
+                  walking and standing. You may also want to bring a camera to
+                  capture the beautiful distillery.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">Is there parking available?</div>
+              <div class="faq-answer">
+                <p>
+                  Yes, we have free parking available on-site for all tour
+                  guests. If you're using a rideshare service, please use our
+                  main entrance for drop-off and pick-up.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">Are tours suitable for children?</div>
+              <div class="faq-answer">
+                <p>
+                  While we welcome visitors of all ages, our tours are designed
+                  for adults 21 and over. Children must be accompanied by an
+                  adult at all times, and please note that only guests 21+ will
+                  be served alcohol during tastings.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">What is your cancellation policy?</div>
+              <div class="faq-answer">
+                <p>
+                  We understand plans change. You can cancel or reschedule your
+                  tour up to 24 hours in advance for a full refund. For groups
+                  of 6 or more, we require 48 hours' notice for cancellations or
+                  changes.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                Do you offer tours for people with disabilities?
+              </div>
+              <div class="faq-answer">
+                <p>
+                  Yes, our facility is wheelchair accessible, and we're happy to
+                  accommodate guests with disabilities. Please let us know in
+                  advance if you have any specific needs so we can ensure you
+                  have the best experience possible.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta">
+        <div class="container">
+          <h2>Ready to Experience Bolton's?</h2>
+          <p>
+            Book your tour today and discover the art of maple-infused brewing.
+          </p>
+          <a href="#book-now" class="btn btn-large">Book Your Tour</a>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-about">
-                    <h3>Bolton's Vermont Distilling Co.</h3>
-                    <p>Proudly crafting maple-infused beers since 1870</p>
-                </div>
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="products.html">Our Beers</a></li>
-                        <li><a href="about.html">Our Story</a></li>
-                        <li><a href="members.html">Owners</a></li>
-                        <li><a href="tours.html">Book a Tour</a></li>
-                    </ul>
-                </div>
-                <div class="footer-contact">
-                    <h4>Contact Us</h4>
-                    <p>123 Brewers Lane<br>Maple Acres, VT 00000</p>
-                    <p>info@boltons.beer<br>(802) 555-5555</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Bolton's Vermont Distilling Company. All rights reserved.</p>
-            </div>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-about">
+            <h3>Bolton's Vermont Distilling Co.</h3>
+            <p>Proudly crafting maple-infused beers since 1870</p>
+          </div>
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="products.html">Our Beers</a></li>
+              <li><a href="about.html">Our Story</a></li>
+              <li><a href="members.html">Owners</a></li>
+              <li><a href="tours.html">Book a Tour</a></li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h4>Contact Us</h4>
+            <p>123 Brewers Lane<br>Maple Acres, VT 00000</p>
+            <p>info@boltons.beer<br>(802) 555-5555</p>
+          </div>
         </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 Bolton's Vermont Distilling Company. All rights
+            reserved.
+          </p>
+        </div>
+      </div>
     </footer>
 
     <script src="js/main.js"></script>
     <script>
-        // FAQ functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const faqItems = document.querySelectorAll('.faq-item');
-            
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                
-                question.addEventListener('click', () => {
-                    // Close all other items
-                    faqItems.forEach(otherItem => {
-                        if (otherItem !== item && otherItem.classList.contains('active')) {
-                            otherItem.classList.remove('active');
-                        }
-                    });
-                    
-                    // Toggle current item
-                    item.classList.toggle('active');
-                });
+      // FAQ functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const faqItems = document.querySelectorAll(".faq-item");
+
+        faqItems.forEach((item) => {
+          const question = item.querySelector(".faq-question");
+
+          question.addEventListener("click", () => {
+            // Close all other items
+            faqItems.forEach((otherItem) => {
+              if (
+                otherItem !== item &&
+                otherItem.classList.contains("active")
+              ) {
+                otherItem.classList.remove("active");
+              }
             });
-            
-            // Form submission
-            const bookingForm = document.getElementById('tour-booking-form');
-            if (bookingForm) {
-                bookingForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    // Simple form validation
-                    const requiredFields = this.querySelectorAll('[required]');
-                    let isValid = true;
-                    
-                    requiredFields.forEach(field => {
-                        if (!field.value.trim()) {
-                            isValid = false;
-                            field.style.borderColor = 'red';
-                        } else {
-                            field.style.borderColor = '#ddd';
-                        }
-                    });
-                    
-                    if (isValid) {
-                        // In a real application, you would send this data to a server
-                        alert('Thank you for your booking! A confirmation has been sent to your email.');
-                        this.reset();
-                    } else {
-                        alert('Please fill in all required fields.');
-                    }
-                });
-            }
+
+            // Toggle current item
+            item.classList.toggle("active");
+          });
         });
+
+        // Form submission
+        const bookingForm = document.getElementById(
+          "tour-booking-form",
+        );
+        if (bookingForm) {
+          bookingForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            // Simple form validation
+            const requiredFields = this.querySelectorAll("[required]");
+            let isValid = true;
+
+            requiredFields.forEach((field) => {
+              if (!field.value.trim()) {
+                isValid = false;
+                field.style.borderColor = "red";
+              } else {
+                field.style.borderColor = "#ddd";
+              }
+            });
+
+            if (isValid) {
+              // In a real application, you would send this data to a server
+              alert(
+                "Thank you for your booking! A confirmation has been sent to your email.",
+              );
+              this.reset();
+            } else {
+              alert("Please fill in all required fields.");
+            }
+          });
+        }
+      });
     </script>
-</body>
+  </body>
 </html>
