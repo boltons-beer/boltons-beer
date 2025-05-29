@@ -12,7 +12,7 @@ import * as Postmark from "./postmark.ts";
 export type QueueItem = {
   queueItemId: string;
   employee: Employee;
-  systemPrompt: string;
+  systemPromptId: string;
   emailPromptId: string;
 };
 const kv = await openKvToolbox({ path: ":memory:" });
@@ -52,11 +52,20 @@ export async function startListener(): Promise<void> {
     const {
       queueItemId,
       employee,
-      systemPrompt,
+      systemPromptId,
       emailPromptId,
     } = actionItem;
 
     const { name } = employee;
+
+    const systemPrompt = await takeBlob(systemPromptId);
+    if (!systemPrompt) {
+      console.warn(
+        `[${queueItemId}] Unable to find system prompt by id for: ${name}`,
+      );
+      Stats.incrementForEmployee(name, "errors");
+      return;
+    }
 
     const emailPrompt = await takeBlob(emailPromptId);
     if (!emailPrompt) {

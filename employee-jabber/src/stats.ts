@@ -29,6 +29,7 @@ export function incrementForEmployee(
     emailsReceived: 0,
     postsMade: 0,
     emailsSent: 0,
+    errors: 0,
   };
 
   stats[key] += 1;

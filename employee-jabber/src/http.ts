@@ -15,6 +15,7 @@ import * as Stats from "./stats.ts";
 import * as Db from "./persistence.ts";
 import * as Queue from "./queue.ts";
 import * as Bsky from "./bsky.ts";
+import { undefined } from "zod/v4";
 
 const app = new Hono();
 
@@ -129,10 +130,18 @@ app.post(
         `To: ${recipientEmailAddress}\nFrom: ${senderEmailAddress}\n${ccLine}${bccLine}Subject: ${emailSubject}\nBody:\n\n${emailBody}`,
       );
 
+      const systemPromptId = await Queue.storeAsBlob(
+        employee.prompt,
+      );
+
+      const {
+        prompt: _,
+        ...plainEmployee
+      } = employee;
       await Queue.enqueue({
-        employee,
-        systemPrompt: employee.prompt,
-        emailPromptId: emailPromptId,
+        systemPromptId,
+        emailPromptId,
+        employee: plainEmployee,
       });
     }
 
