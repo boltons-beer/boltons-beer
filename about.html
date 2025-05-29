@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story - Bolton's Vermont Distilling Company</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Additional styles for the about page */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background-color: var(--color-maple-orange);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            margin-bottom: 3rem;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: white;
+            border: 3px solid var(--color-maple-orange);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+        
+        .left {
+            left: 0;
+            padding-right: 70px;
+            text-align: right;
+        }
+        
+        .right {
+            left: 50%;
+            padding-left: 70px;
+        }
+        
+        .left::after {
+            right: -12.5px;
+        }
+        
+        .right::after {
+            left: -12.5px;
+        }
+        
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: white;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline-year {
+            font-weight: bold;
+            color: var(--color-maple-red);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+                text-align: left;
+            }
+            
+            .left, .right {
+                left: 0;
+                text-align: left;
+                padding-right: 25px;
+                padding-left: 70px;
+            }
+            
+            .left::after, .right::after {
+                left: 18.5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <h1>Bolton's</h1>
+                <p>Vermont Distilling Company</p>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Our Beers</a></li>
+                    <li><a href="about.html" class="active">Our Story</a></li>
+                    <li><a href="members.html">Owners</a></li>
+                    <li><a href="tours.html" class="btn">Book a Tour</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Our Story</h1>
+                <p>A legacy of quality and craftsmanship since 1870</p>
+            </div>
+        </section>
+
+        <section class="about-intro">
+            <div class="container">
+                <div class="about-content">
+                    <h2>Rooted in Vermont's Maple Tradition</h2>
+                    <p>For over 150 years, Bolton's Vermont Distilling Company has been crafting exceptional beers that celebrate Vermont's most famous natural resource: pure maple syrup. What began as a small family operation has grown into a cooperative of passionate brewers and distillers, all dedicated to preserving our heritage while innovating for the future.</p>
+                </div>
+                <div class="about-image">
+                    <img src="images/old-distillery.jpg" alt="Historic Bolton's Distillery">
+                </div>
+            </div>
+        </section>
+
+        <section class="timeline-section">
+            <div class="container">
+                <h2 class="section-title">Our Journey Through Time</h2>
+                <div class="timeline">
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <span class="timeline-year">1870</span>
+                            <h3>Maple Whiskey Beginnings</h3>
+                            <p>Chester Bolton founds Bolton's Vermont Distilling Company, crafting premium maple syrup whiskey using time-honored techniques and local Vermont ingredients.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <span class="timeline-year">1930</span>
+                            <h3>New Ownership</h3>
+                            <p>Following Prohibition, the Bolton family's involvement in the company ends as new owners take over, marking the beginning of a new chapter for the distillery.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <span class="timeline-year">1935</span>
+                            <h3>Brewing Begins</h3>
+                            <p>The company shifts focus from whiskey to beer production, developing unique maple-infused recipes that would become their signature brews.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <span class="timeline-year">1955</span>
+                            <h3>Worker Cooperative</h3>
+                            <p>Employees form a worker cooperative to purchase the company, ensuring local ownership and preserving the Bolton's legacy for future generations.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <span class="timeline-year">2000s</span>
+                            <h3>Modern Renaissance</h3>
+                            <p>Bolton's gains recognition for its innovative maple-infused beers, winning awards and expanding distribution throughout New England while maintaining small-batch quality.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <span class="timeline-year">2015</span>
+                            <h3>Sustainability Leadership</h3>
+                            <p>The cooperative implements comprehensive sustainability initiatives, including solar power and zero-waste production, setting new standards for environmental responsibility in craft brewing.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <span class="timeline-year">Present</span>
+                            <h3>Looking Forward</h3>
+                            <p>Today, Bolton's remains worker-owned and community-focused, continuing to innovate while honoring our heritage of quality and craftsmanship in every bottle.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="values">
+            <div class="container">
+                <h2 class="section-title">Our Core Values</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">🍁</div>
+                        <h3>Vermont Proud</h3>
+                        <p>We source 100% of our maple syrup from local Vermont sugar makers, supporting our community and ensuring the highest quality ingredients.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🌱</div>
+                        <h3>Sustainable Practices</h3>
+                        <p>From energy-efficient brewing to eco-friendly packaging, we're committed to minimizing our environmental impact at every step.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🤝</div>
+                        <h3>Community Focused</h3>
+                        <p>As a cooperative, we believe in shared success. Our members and community are at the heart of everything we do.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <div class="container">
+                <h2>Experience Our Heritage</h2>
+                <p>Visit our distillery to see firsthand how we combine tradition with innovation to create our signature maple-infused beers.</p>
+                <a href="tours.html" class="btn btn-large">Plan Your Visit</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3>Bolton's Vermont Distilling Co.</h3>
+                    <p>Proudly crafting maple-infused beers since 1870</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Our Beers</a></li>
+                        <li><a href="about.html">Our Story</a></li>
+                        <li><a href="members.html">Owners</a></li>
+                        <li><a href="tours.html">Book a Tour</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>123 Brewers Lane<br>Maple Acres, VT 00000</p>
+                    <p>info@boltons.beer<br>(802) 555-5555</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bolton's Vermont Distilling Company. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
