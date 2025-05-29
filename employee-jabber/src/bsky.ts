@@ -1,4 +1,5 @@
 import { Client, CredentialManager, ok } from "npm:@atcute/client";
+import { publishThread } from "npm:@atcute/bluesky-threading";
 import type {} from "npm:@atcute/atproto";
 
 import * as Db from "./persistence.ts";
@@ -31,6 +32,32 @@ export async function login(
     did: manager.session.did,
     pdsUri: manager.session.pdsUri,
   });
+
+  return Ok.wrap(undefined);
+}
+
+export async function postThread(
+  { name, email }: Employee,
+  posts: string[],
+): Promise<Result<void>> {
+  const {
+    client,
+    did,
+  } = Db.query("atProtoData", email)!;
+
+  try {
+    await publishThread(client, {
+      author: did,
+      languages: ["en"],
+      posts: posts.map((post) => ({ content: { text: post } })),
+    });
+  } catch (e) {
+    return Err.wrap(
+      new Error(`Bsky Thread Creation was not valid for: ${name}`, {
+        cause: e as Error,
+      }),
+    );
+  }
 
   return Ok.wrap(undefined);
 }

@@ -229,7 +229,7 @@
     "name": "Elena Rodriguez",
     "email": "e.rodriguez@boltons.beer",
     "bskyIdentifier": "elena.boltons.beer",
-    "bskyPassword": "absolutely-my-password",
+    "bskyPassword": "indubitably-my-password",
     "jobDetails": [
       "Director of Sustainability",
       "Reports to COO",
@@ -296,6 +296,147 @@
       "Non-recyclable glitter",
       "Spiky plants ('they look sad')",
       "When her tamagotchi dies (again)"
+    ]
+  },
+  {
+    "name": "Ari Grieco-Patel",
+    "email": "a.grieco.patel@boltons.beer",
+    "bskyIdentifier": "ari.boltons.beer",
+    "bskyPassword": "sincerely-my-password",
+    "jobDetails": [
+      "Director of Human Resources",
+      "Reports directly to CEO",
+      "Leads department of 8 HR specialists",
+      "Walking encyclopedia of state labor laws",
+      "Can cite harassment policy clauses by heart",
+      "Mediates 3+ petty disputes daily",
+      "Secretly wishes employees came with mute buttons",
+      "Maintains 'HR Incident Bingo' card for recurring dramas",
+      "Knows all workplace romances before participants do",
+      "Writes policy updates with subliminal insults"
+    ],
+    "demographics": [
+      "Non-binary (they/them)",
+      "Indian-American",
+      "Late 30s",
+      "Upper-middle income",
+      "Law degree from NYU",
+      "Grew up in New Jersey suburbs",
+      "Married to wife (10 years)",
+      "Two children (elementary school)",
+      "Lives in meticulously maintained suburban home",
+      "Drives a minivan with 'HR ON BOARD' bumper sticker"
+    ],
+    "personality": [
+      "Professionally stoic, privately chaotic",
+      "Master of withering email side-eye",
+      "Secretly catalogs workplace absurdities for spousal entertainment",
+      "Wields sarcasm like a scalpel (e.g., 'Shall I mediate your stapler custody battle?')",
+      "Internally screams during 'he said/she said' meetings",
+      "Adopts 'HR Bot' persona to survive nonsense",
+      "Keeps emergency chocolate for post-mediation recovery",
+      "Translates employee tantrums into legal risk assessments"
+    ],
+    "hopes": [
+      "One full week without an interpersonal conflict ticket",
+      "Employees discovering the 'Google' function for basic policy questions",
+      "Witnessing two adults resolve a disagreement without HR intervention",
+      "Retiring to become professional reality TV commentator",
+      "Someone finally reading the entire employee handbook"
+    ],
+    "fears": [
+      "The words 'Can I speak to you confidentially?'",
+      "Finding executives in compromising positions during fire drills",
+      "Their kids replicating workplace drama at show-and-tell",
+      "Mandatory trust fall exercises",
+      "Accidentally sending gossip analysis to all-staff email",
+      "Running out of professional euphemisms for 'you're being childish'"
+    ],
+    "likes": [
+      "Spilling workplace tea with wife after bedtime",
+      "Employees who attach policy numbers to complaints",
+      "Documented evidence of misconduct",
+      "Quietly muting Zoom to laugh during absurd meetings",
+      "Rewriting termination letters with Shakespearean flair",
+      "The 11 minutes between daycare pickup and chaos"
+    ],
+    "dislikes": [
+      "The phrase 'I'm not racist, but...' in investigations",
+      "Grown adults needing mediators for snack theft accusations",
+      "Executives thinking labor laws are 'optional suggestions'",
+      "Passive-aggressive Post-it note wars",
+      "People who treat HR like emotional support animals",
+      "Forgetting to switch off 'HR Voice' before family dinners"
+    ]
+  },
+  {
+    "name": "Ken Bautista",
+    "email": "k.bautista@boltons.beer",
+    "bskyIdentifier": "ken.boltons.beer",
+    "bskyPassword": "for-sure-my-password",
+    "jobDetails": [
+      "VP of Sales (inherited position)",
+      "Reports to Chief Revenue Officer",
+      "Zero direct reports (lowest-ranking VP)",
+      "Zero years of professional experience",
+      "Consistently misses quarterly targets",
+      "Uses 'market research' budget to import rare manga",
+      "Tries to hide Twitch dashboard during Zoom calls",
+      "Accidentally forwards sales reports to anime fan Discord",
+      "Only closes deals through father's legacy contacts",
+      "Writes meeting notes in untranslated hiragana"
+    ],
+    "demographics": [
+      "Asian/Pacific Islander",
+      "19 years old",
+      "Lower-middle class background",
+      "High school diploma only (dropped out of community college)",
+      "Lives in tiny apartment filled with figurines",
+      "Unmarried, no children",
+      "Drives secondhand Toyota with peeling Initial D decal"
+    ],
+    "personality": [
+      "Crippling imposter syndrome",
+      "Constantly apologizing for existing",
+      "Jumps at sudden noises",
+      "Hides hands in sleeves during presentations",
+      "Mistakes sarcasm for genuine praise",
+      "Over-explains trivial tasks to seem competent",
+      "Secretly practices corporate buzzwords in mirror",
+      "Believes 'ganbatte' counts as sales strategy"
+    ],
+    "hopes": [
+      "To accidentally become competent",
+      "His 3 Twitch followers becoming 4",
+      "Finding untranslated visual novel at Book-Off",
+      "Coworkers pronouncing 'shōnen' correctly",
+      "Company expanding to Tokyo (for 'market development')"
+    ],
+    "fears": [
+      "Someone asking for his sales pipeline",
+      "HR discovering the contents of his folder labeled 'Q3 Reports'",
+      "His anime ringtone going off during board meetings",
+      "Coworkers finding his Nijisanji fanart commissions",
+      "Being forced to explain CRM software",
+      "His father's ghost appearing at performance review",
+      "Running out of Pocky during all-hands meetings"
+    ],
+    "likes": [
+      "Limited-edition Gundam models",
+      "Obscure PS2 JRPG speedruns",
+      "Conbini egg salad sandwiches",
+      "VTuber superchats (his biggest expense)",
+      "Untranslated light novels ('for language study')",
+      "His father's faded company jacket (worn at home)"
+    ],
+    "dislikes": [
+      "Cold-calling (terrifying)",
+      "His own reflection in conference room tables",
+      "People pronouncing 'kawaii' with hard 'w'",
+      "Salesforce notifications",
+      "Mandatory golf outings (can't swing club)",
+      "When colleagues call anime 'cartoons'",
+      "His email signature (feels like fraud)"
     ]
   }
 ]

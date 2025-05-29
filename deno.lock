@@ -13,6 +13,7 @@
     "jsr:@std/encoding@^1.0.5": "1.0.10",
     "jsr:@std/media-types@1": "1.1.0",
     "npm:@atcute/atproto@^3.0.2": "3.0.2",
+    "npm:@atcute/bluesky-threading@*": "5.0.3",
     "npm:@atcute/client@*": "4.0.2",
     "npm:@atcute/client@^4.0.2": "4.0.2",
     "npm:@hono/zod-validator@*": "0.5.0_hono@4.7.10_zod@3.25.28",
@@ -68,20 +69,67 @@
     "@atcute/atproto@3.0.2": {
       "integrity": "sha512-p37GqTmrxc1XaxtX8JsePEuomL+PtDeGdy0lcBm+HisD03ZZTia7MouxUpnYezX0l926fFaDc9tllIBtX9iSsQ==",
       "dependencies": [
-        "@atcute/lexicons"
+        "@atcute/lexicons@1.0.3"
+      ]
+    },
+    "@atcute/atproto@3.1.0": {
+      "integrity": "sha512-aJbDsY7FcIh8APWKAimBtshPwqoRE056tc0UV6vw4TW4e3nYaHedoJmKhlh/k8KQWxyw64MQThNGMaC89HNoTg==",
+      "dependencies": [
+        "@atcute/lexicons@1.0.4"
+      ]
+    },
+    "@atcute/bluesky-threading@5.0.3": {
+      "integrity": "sha512-WtKgWpDWYXpWInIWxzELT/rTPjPgwDc8k0Fy7r5t7kSaWj966DBRZSGm1vwWI/0Ly+mA0qDjzNPyQJ68KS3IYQ==",
+      "dependencies": [
+        "@atcute/atproto@3.0.2",
+        "@atcute/bluesky",
+        "@atcute/cbor",
+        "@atcute/cid",
+        "@atcute/client@4.0.3",
+        "@atcute/lexicons@1.0.3",
+        "@atcute/tid"
+      ]
+    },
+    "@atcute/bluesky@3.1.0": {
+      "integrity": "sha512-i5ABWnRpw+YsMyUz9jkkrbN0m3Fz8qLy4nIMPs4IoSKgO/UjmZFvfIkabXUOUHcnHPgph2yViXA1buzTR0RNWQ==",
+      "dependencies": [
+        "@atcute/atproto@3.1.0",
+        "@atcute/lexicons@1.0.4"
+      ]
+    },
+    "@atcute/cbor@2.2.4": {
+      "integrity": "sha512-8Y/OTM8zs5VInOCjfx4f9Idiiz7ygM/FkfWv/HW3/ZUsXczn1xk7GzTBbm4P5crn4C5luwDGpO7FwClMOERrow==",
+      "dependencies": [
+        "@atcute/cid",
+        "@atcute/multibase",
+        "@atcute/uint8array"
+      ]
+    },
+    "@atcute/cid@2.2.3": {
+      "integrity": "sha512-WEzNSL1EuCVtCQDFYEBIm4dEP6PcMEwi8IYUVIWvT77eO5EjY58F63z5T4qMABxSBM0+L4kqMxypdL1Fzf6LZw==",
+      "dependencies": [
+        "@atcute/multibase",
+        "@atcute/uint8array"
       ]
     },
     "@atcute/client@4.0.2": {
       "integrity": "sha512-AOs6DEm59I0+wt8JOEOjKQLtBYZMML9p40pxaEWqP/ukAlhYUfLc9Geby5CMBmh7TchQCMCSHQzrY/lDs026Bw==",
       "dependencies": [
         "@atcute/identity",
-        "@atcute/lexicons"
+        "@atcute/lexicons@1.0.3"
+      ]
+    },
+    "@atcute/client@4.0.3": {
+      "integrity": "sha512-RIOZWFVLca/HiPAAUDqQPOdOreCxTbL5cb+WUf5yqQOKIu5yEAP3eksinmlLmgIrlr5qVOE7brazUUzaskFCfw==",
+      "dependencies": [
+        "@atcute/identity",
+        "@atcute/lexicons@1.0.4"
       ]
     },
     "@atcute/identity@1.0.2": {
       "integrity": "sha512-SrDPHuEarEHj9bx7NfYn7DYG6kIgJIMRU581iOCIaVaiZ1WhE9D8QxTxeYG/rbGNSa85E891ECp1sQcKiBN0kg==",
       "dependencies": [
-        "@atcute/lexicons",
+        "@atcute/lexicons@1.0.3",
         "@badrap/valita"
       ]
     },
@@ -90,6 +138,24 @@
       "dependencies": [
         "esm-env"
       ]
+    },
+    "@atcute/lexicons@1.0.4": {
+      "integrity": "sha512-VyGJuGKAIeE+71UT9aSMJJdvfxfXsdsGMG9acv9rnGT7enVy4TD5XoYQy7TCHZ4YpxXzuHkqjyAqBz95c4WkRg==",
+      "dependencies": [
+        "esm-env"
+      ]
+    },
+    "@atcute/multibase@1.1.4": {
+      "integrity": "sha512-NUf5AeeSOmuZHGU+4GAaMtISJoG+ZHtW/vUVA4lK/YDt/7LODAW0Fd0NNIIUPVUoW0xJS6zSEIWvwLLuxmEHhA==",
+      "dependencies": [
+        "@atcute/uint8array"
+      ]
+    },
+    "@atcute/tid@1.0.2": {
+      "integrity": "sha512-ahmjroNyeDPJhtuf3+HTJropaH04HmJ8fhntDu73Gpz/RkAF7+nkz6kcP2QTgfvMCgMPAJUdskAAP82GPDTY9w=="
+    },
+    "@atcute/uint8array@1.0.3": {
+      "integrity": "sha512-M/K+ihiVW8Pl2PFLzaC4E3l4JaZ1IH05Q0AbPWUC4cVHnd/gZ/1kAF5ngdtGvJeDMirHZ2VAy7OmAsPwR/2nlA=="
     },
     "@badrap/valita@0.4.5": {
       "integrity": "sha512-4QwGbuhh/JesHRQj79mO/l37PvJj4l/tlAu7+S1n4h47qwaNpZ0WDvIwUGLYUsdi9uQ5UPpiG9wb1Wm3XUFBUQ=="
@@ -366,6 +432,7 @@
           "jsr:@std/assert@1",
           "jsr:@std/encoding@^1.0.10",
           "npm:@atcute/atproto@^3.0.2",
+          "npm:@atcute/bluesky-threading@^5.0.3",
           "npm:@atcute/client@^4.0.2",
           "npm:@hono/zod-validator@0.5",
           "npm:hono@^4.7.10",

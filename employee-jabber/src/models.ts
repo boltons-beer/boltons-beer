@@ -60,9 +60,16 @@ export const BskyPostAction = z.object({
 });
 export type BskyPostAction = z.infer<typeof BskyPostAction>;
 
+export const BskyThreadAction = z.object({
+  kind: z.literal("bsky-thread"),
+  content: z.string().max(300).array().min(1),
+});
+export type BskyThreadAction = z.infer<typeof BskyThreadAction>;
+
 export const AiNextAction = z.discriminatedUnion("kind", [
   EmailSendAction,
   BskyPostAction,
+  BskyThreadAction,
 ]);
 export type AiNextAction = z.infer<typeof AiNextAction>;
 

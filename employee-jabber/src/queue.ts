@@ -82,11 +82,16 @@ export async function startListener(): Promise<void> {
 
     for (const nextAction of nextActionsResult.value) {
       let result;
-      let statKey: 'postsMade' | 'emailsSent';
+      let statKey: "postsMade" | "emailsSent";
       switch (nextAction.kind) {
         case "bsky-post": {
           statKey = "postsMade";
           result = await Bsky.post(employee, nextAction.content);
+          break;
+        }
+        case "bsky-thread": {
+          statKey = "postsMade";
+          result = await Bsky.postThread(employee, nextAction.content);
           break;
         }
         case "email-send": {

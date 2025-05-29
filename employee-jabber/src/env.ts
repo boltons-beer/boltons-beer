@@ -1,5 +1,6 @@
 import { decodeBase64 } from "jsr:@std/encoding/base64";
 
+export const enableDebugPrompt = booleanEnvVar("ENABLE_DEBUG_PROMPT");
 export const enableDebugStats = booleanEnvVar("ENABLE_DEBUG_STATS");
 export const enabledDebugConversations = booleanEnvVar(
   "ENABLE_DEBUG_CONVERSATIONS",

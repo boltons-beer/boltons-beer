@@ -18,8 +18,11 @@ if (!inputFile) {
 const inputText = await Deno.readTextFile(inputFile);
 const entries = inputText.split("\n");
 
-const cmd = new Deno.Command("fly", { args: ["secrets", "set", ...entries] });
+const cmd = new Deno.Command("fly", {
+  args: ["secrets", "set", ...entries.filter((entry) => entry.trim() != "")],
+});
 const { stdout, stderr } = await cmd.output();
+
 if (stdout.length) {
   const textDecoder = new TextDecoder();
   console.log(textDecoder.decode(stdout));
@@ -27,5 +30,5 @@ if (stdout.length) {
 
 if (stderr.length) {
   const textDecoder = new TextDecoder();
-  console.error(textDecoder.decode(stdout));
+  console.error(textDecoder.decode(stderr));
 }
