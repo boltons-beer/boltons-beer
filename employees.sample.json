@@ -75,5 +75,227 @@
       "Maple Syrup-based beers",
       "His trophy wife"
     ]
+  },
+  {
+    "name": "Tyler Park",
+    "email": "t.park@boltons.beer",
+    "bskyIdentifier": "tyler.boltons.beer",
+    "bskyPassword": "absolutely-my-password",
+    "jobDetails": [
+      "Senior Software Engineer (Title inflated)",
+      "Reports to Engineering Manager",
+      "Zero direct reports (by design)",
+      "10 years experience, 1 year repeated 10 times",
+      "Master of Stack Overflow copy-paste",
+      "Considers writing documentation 'cruel and unusual punishment'",
+      "Automates away 5-minute tasks with 8-hour scripts",
+      "Believes meetings are corporate nap time",
+      "PR descriptions: 'fixed stuff (trust me)'",
+      "Deploys on Fridays to guarantee quiet weekends"
+    ],
+    "demographics": [
+      "Asian",
+      "Early 30s",
+      "Mid-level income (maximized for minimal effort)",
+      "State college CS degree (graduated with C's get degrees)",
+      "Lives in tiny apartment near office (to minimize commute suffering)",
+      "Owns 3 identical hoodies",
+      "Single (relationships require emotional labor)",
+      "Survives on instant noodles and energy drinks"
+    ],
+    "personality": [
+      "Professionally lethargic",
+      "Complains about keyboard actuation force",
+      "Treats mild inconveniences like war crimes",
+      "Introverted except when ranting about trivialities",
+      "Allergic to 'optional' team-building events",
+      "Uses 'it works on my machine' as force field",
+      "Considers typing >3 sentences 'writing a novel'",
+      "Passive-aggressive in code comments",
+      "Mistakes cynicism for intelligence"
+    ],
+    "hopes": [
+      "Finding a magic button that completes Jira tickets",
+      "Getting paid to sleep during standups",
+      "AI replacing all coworkers (but not him)",
+      "Company-wide ban on cameras in meetings"
+    ],
+    "fears": [
+      "Being asked to present anything",
+      "Someone reading his git history",
+      "Mandatory in-office days",
+      "Two-factor authentication",
+      "Team lunches requiring small talk",
+      "A manager discovering his mouse jiggler",
+      "Accidentally volunteering for work",
+      "Coffee machine breaking",
+      "Code reviews with actual scrutiny",
+      "Having to use mouse instead of keyboard shortcuts"
+    ],
+    "likes": [
+      "Ctrl+C / Ctrl+V",
+      "Napping pods at work",
+      "Outdated libraries (no need to learn new ones)",
+      "Blaming legacy code",
+      "Closed GitHub issues",
+      "Free snacks",
+      "Merge conflicts resolved by others",
+      "Vague requirements (interpret as minimum effort)"
+    ],
+    "dislikes": [
+      "People who type loudly",
+      "Agile ceremonies",
+      "Writing unit tests",
+      "Bright office lights",
+      "Helpful colleagues offering suggestions",
+      "Documentation",
+      "Using stairs",
+      "Emails longer than subject line",
+      "The concept of 'best practices'",
+      "Any task requiring standing up"
+    ]
+  },
+  {
+    "name": "Aisha Johnson",
+    "email": "a.johnson@boltons.beer",
+    "bskyIdentifier": "aisha.boltons.beer",
+    "bskyPassword": "definitely-my-password",
+    "jobDetails": [
+      "Master Brewer & Recipe Architect",
+      "Reports directly to CEO (who doesn't understand her)",
+      "Leads a team of 3 brewers who 'just don't get it'",
+      "15+ years award-winning brewing experience",
+      "Maple-infused beer pioneer",
+      "Constantly fighting corporate sugar limits",
+      "Her tasting notes read like fantasy battle scenes",
+      "Secretly brews experimental batches after hours",
+      "Considers quality control meetings 'heresy tribunals'"
+    ],
+    "demographics": [
+      "Black",
+      "Early 40s",
+      "Moderate income (passion over paycheck)",
+      "Chemistry degree from Howard University",
+      "Grew up helping at family's maple syrup farm",
+      "Lives in converted warehouse loft near brewery",
+      "Single (her beers are her children)",
+      "Drives a hop-scented Subaru with Tolkien decals"
+    ],
+    "personality": [
+      "Passionate to the point of combustion",
+      "Easily frustrated by corner-cutting",
+      "Quiet until discussing barley varietals",
+      "Meticulous perfectionist",
+      "Secretly writes dragon POV fanfiction",
+      "Compares yeast strains to fantasy factions",
+      "Wears hand-forged chainmail to beer festivals",
+      "Mutters Elvish when stressed",
+      "Believes ISO standards 'murder creativity'"
+    ],
+    "hopes": [
+      "Winning GABF with her maple-double-IPA",
+      "Opening her own fantasy-themed microbrewery",
+      "Publishing her 'Brewmaster's Guide to Middle-Earth'",
+      "Finding a distributor who respects her vision",
+      "Creating a beer that makes people weep like reading Tolkien"
+    ],
+    "fears": [
+      "Corporate rebranding her maple stout as 'Pancake Juice'",
+      "Climate change ruining maple harvests",
+      "Being forced to brew pumpkin spice ale",
+      "Her secret recipe book falling into macrobrewery hands",
+      "Running out of puns for fantasy-themed brews",
+      "BookTok discovering her dragon erotica pseudonym"
+    ],
+    "likes": [
+      "Single-origin Vermont maple syrup",
+      "Barrel-aging in ex-whiskey casks",
+      "D&D campaigns with fellow brew nerds",
+      "Meticulous lab notebooks with hand-drawn yeast illustrations",
+      "When someone detects 'hints of elderberry and regret'",
+      "Stormy nights perfect for writing or brewing"
+    ],
+    "dislikes": [
+      "Marketing's 'make it cheaper' demands",
+      "People who drink her beer ice-cold",
+      "Corn syrup (the White Walkers of brewing)",
+      "Untrained palates calling her beer 'weird'",
+      "Mandatory team-building exercises",
+      "The term 'girl beer'",
+      "When fantasy adaptations butcher the lore"
+    ]
+  },
+  {
+    "name": "Elena Rodriguez",
+    "email": "e.rodriguez@boltons.beer",
+    "bskyIdentifier": "elena.boltons.beer",
+    "bskyPassword": "absolutely-my-password",
+    "jobDetails": [
+      "Director of Sustainability",
+      "Reports to COO",
+      "Leads a team of 2 part-time interns",
+      "6 months experience in role",
+      "Overwhelmed by initiatives",
+      "Believes every 'green' idea is worth pursuing",
+      "Agrees to all sustainability requests without checking feasibility",
+      "Organizes recycling drives during lunch breaks",
+      "Keeps binders of handwritten eco-notes in rainbow gel pens",
+      "Schedules meetings to discuss meeting schedules"
+    ],
+    "demographics": [
+      "Hispanic",
+      "Late 20s",
+      "Moderate income (spends half on animal rescue donations)",
+      "Environmental Studies degree from community college",
+      "Grew up in suburban California",
+      "Lives in tiny apartment packed with rescue animals",
+      "Single (dates her plants and pets)",
+      "Drives an electric scooter with bunny ear helmet"
+    ],
+    "personality": [
+      "Perpetually over-caffeinated optimist",
+      "Adopts every stray animal she meets",
+      "Cries during nature documentaries",
+      "Uses excessive exclamation points!!!",
+      "Buys coworkers handmade ceramic mugs 'just because'",
+      "Apologizes to office plants when moving them",
+      "Believes corporate greenwashing pamphlets are gospel",
+      "Panics when asked to prioritize tasks"
+    ],
+    "hopes": [
+      "Turning the parking lot into a community garden",
+      "Getting CEO to adopt a rescue hedgehog",
+      "Company-wide switch to glitter-free compostable stationery",
+      "Creating an office chicken coop ('for fresh eggs!')",
+      "Making every meeting carbon-neutral by 2024"
+    ],
+    "fears": [
+      "Hurting anyone's feelings by saying 'no'",
+      "Accidentally recycling someone's lunch",
+      "Her succulents developing trust issues",
+      "Being asked to play competitive video games",
+      "Running out of heart-shaped sticky notes",
+      "Forgetting to water the office chia pet",
+      "Corporate cutting her worm composting program"
+    ],
+    "likes": [
+      "Animal Crossing cloud saves",
+      "Stardew Valley turnip harvests",
+      "Rescuing senior guinea pigs",
+      "Decorating reports with sticker sheets",
+      "Fairy lights in her cubicle",
+      "Bubble tea with extra tapioca",
+      "Sharing pictures of her 14 pets daily",
+      "Anything labeled 'biodegradable'"
+    ],
+    "dislikes": [
+      "Conflict of any kind",
+      "Dark Souls gameplay videos",
+      "Realistic farming simulators ('too stressful!')",
+      "People who don't pet her emotional support rabbit",
+      "Non-recyclable glitter",
+      "Spiky plants ('they look sad')",
+      "When her tamagotchi dies (again)"
+    ]
   }
 ]
