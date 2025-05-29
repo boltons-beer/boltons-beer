@@ -62,7 +62,4 @@ const parseEmployees = (rawEmployees: unknown[]): EmployeeWithPrompt[] =>
       prompt: formatPrompt(employee),
     }));
 
-export const employeeByEmail = parseEmployees(employees).reduce((acc, employee) => {
-    acc.set(employee.email, employee);
-    return acc;
-}, new Map<string, EmployeeWithPrompt>);
+export const employeesWithPrompts = parseEmployees(employees);

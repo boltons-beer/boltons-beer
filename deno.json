@@ -1,13 +1,10 @@
 {
-  "lock": false,
-  "nodeModulesDir": 'auto',
   "workspace": [
-    "./corporate-site",
     "./employee-jabber",
     "./tooling"
   ],
   "tasks": {
-    "encode-storyline": "deno run --allow-read --allow-write ./tooling/b64-encode-file.ts -i ./storyline.txt -o ./corporate-site/.env -o ./employee-jabber/.env -s B64_ENCODED_STORYLINE",
-    "encode-employees": "deno run --allow-read --allow-write ./tooling/b64-encode-file.ts -i ./employees.json -o ./corporate-site/.env -o ./employee-jabber/.env -s B64_ENCODED_EMPLOYEES"
+    "encode-storyline": "deno run --allow-read --allow-write ./tooling/b64-encode-file.ts -i ./storyline.txt -o ./employee-jabber/.env -s B64_ENCODED_STORYLINE",
+    "encode-employees": "deno run --allow-read --allow-write ./tooling/b64-encode-file.ts -i ./employees.json -o ./employee-jabber/.env -s B64_ENCODED_EMPLOYEES"
   }
 }
