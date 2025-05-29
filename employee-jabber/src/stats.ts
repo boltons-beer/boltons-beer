@@ -28,6 +28,7 @@ export function incrementForEmployee(
   const stats = runtimeStats.employeeStats[name] ?? {
     emailsReceived: 0,
     postsMade: 0,
+    emailsSent: 0,
   };
 
   stats[key] += 1;
