@@ -1,34 +1,40 @@
-type Stats = { emailsReceived: number; postsMade: number; errors: number };
+type Stats = {
+  emailsReceived: number;
+  postsMade: number;
+  emailsSent: number;
+  errors: number;
+};
 const runtimeStats: Stats & { employeeStats: Record<string, Stats> } = {
-    emailsReceived: 0,
-    postsMade: 0,
-    errors: 0,
-    employeeStats: {},
+  emailsReceived: 0,
+  postsMade: 0,
+  errors: 0,
+  emailsSent: 0,
+  employeeStats: {},
 };
 
 export function get(): Stats {
-    return structuredClone(runtimeStats);
+  return structuredClone(runtimeStats);
 }
 
 export function incrementOverall(key: keyof Stats) {
-    runtimeStats[key] += 1;
+  runtimeStats[key] += 1;
 }
 
 export function incrementForEmployee(
-    name: string,
-    key: keyof Stats,
-    mode: "increment-overall" | "skip-overall" = "increment-overall",
+  name: string,
+  key: keyof Stats,
+  mode: "increment-overall" | "skip-overall" = "increment-overall",
 ) {
-    const stats = runtimeStats.employeeStats[name] ?? {
-        emailsReceived: 0,
-        postsMade: 0,
-    };
+  const stats = runtimeStats.employeeStats[name] ?? {
+    emailsReceived: 0,
+    postsMade: 0,
+  };
 
-    stats[key] += 1;
-    runtimeStats.employeeStats[name] = stats;
-    if (mode === "skip-overall") {
-        return;
-    }
+  stats[key] += 1;
+  runtimeStats.employeeStats[name] = stats;
+  if (mode === "skip-overall") {
+    return;
+  }
 
-    incrementOverall(key);
+  incrementOverall(key);
 }

@@ -1,30 +1,46 @@
-import {employees} from './env.ts';
-import commonPrompt from './prompt.ts';
+import { employees } from "./env.ts";
+import commonPrompt from "./prompt.ts";
 
 import {
-    Employee,
-    EmployeeList,
-    EmployeeWithPrompt,
-} from './models.ts';
+  CoworkerSummary,
+  Employee,
+  EmployeeList,
+  EmployeeWithPrompt,
+} from "./models.ts";
 
 const formatPromptLine = (items?: string[]) => {
-    if (!items?.length) {
-        return '- Nothing of note';
-    }
+  if (!items?.length) {
+    return "- Nothing of note";
+  }
 
-    return items.map((item) => `- ${item}`).join('\n');
-}
+  return items.map((item) => `- ${item}`).join("\n");
+};
+
+const formatCoworkerSummaries = (summaries: CoworkerSummary[]) => {
+  if (!summaries?.length) {
+    return "- No one of note";
+  }
+
+  return summaries.map(({ name, email, jobDetails }) => {
+    const jobLines = jobDetails
+      ? jobDetails.map((detail) => `\t- ${detail}`).join("\n")
+      : null;
+    return `- ${name} (${email})${jobLines && `\n${jobLines}`}`;
+  }).join("\n");
+};
 
 const formatPrompt = ({
-    name,
-    jobDetails,
-    background,
-    personality,
-    hopes,
-    fears,
-    likes,
-    dislikes,
-}: Employee) => `You are ${name}.
+  name,
+  jobDetails,
+  background,
+  personality,
+  hopes,
+  fears,
+  likes,
+  dislikes,
+  coworkerSummaries,
+}: Employee & { coworkerSummaries: CoworkerSummary[] }) =>
+  `You are ${name}.
 
 Your job details are:
 
@@ -52,14 +68,34 @@ ${formatPromptLine(likes)}
  
 Your dislikes are: 
 
-${formatPromptLine(dislikes)} 
+${formatPromptLine(dislikes)}
+
+Here is a (non-exhaustive) list of your coworkers:
+
+${formatCoworkerSummaries(coworkerSummaries)}
  
 ${commonPrompt}`;
 
-const parseEmployees = (rawEmployees: unknown[]): EmployeeWithPrompt[] =>
-    EmployeeList.parse(rawEmployees).map((employee) => ({
+const parseEmployees = (rawEmployees: unknown[]): EmployeeWithPrompt[] => {
+  const list = EmployeeList.parse(rawEmployees);
+  const coworkerSummaries: CoworkerSummary[] = list.map((
+    { name, email, jobDetails },
+  ) => ({
+    name,
+    email,
+    jobDetails: jobDetails ?? [],
+  }));
+  return list.map((employee) => {
+    const otherSummaries = coworkerSummaries
+      .filter(({ email }) => email !== employee.email);
+    return {
       ...employee,
-      prompt: formatPrompt(employee),
-    }));
+      prompt: formatPrompt({
+        ...employee,
+        coworkerSummaries: otherSummaries,
+      }),
+    };
+  });
+};
 
 export const employeesWithPrompts = parseEmployees(employees);

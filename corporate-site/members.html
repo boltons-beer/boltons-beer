@@ -1,444 +1,502 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Owners - Bolton's Vermont Distilling Company</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    >
     <style>
-        /* Additional styles for the members page */
-        .members-intro {
-            padding: 4rem 0;
-            background-color: var(--color-light-gray);
-            text-align: center;
-        }
-        
-        .members-intro h2 {
-            color: var(--color-maple-red);
-            margin-bottom: 1.5rem;
-        }
-        
-        .members-intro p {
-            max-width: 800px;
-            margin: 0 auto 2rem;
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-        
-        .coop-stats {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-        
-        .stat-item {
-            background-color: var(--color-white);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            min-width: 200px;
-        }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--color-maple-orange);
-            margin-bottom: 0.5rem;
-            line-height: 1;
-        }
-        
-        .stat-label {
-            font-size: 1rem;
-            color: var(--color-text-light);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .members-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-        
-        .member-card {
-            background-color: var(--color-white);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: var(--transition);
-        }
-        
-        .member-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-        
-        .member-image {
-            height: 350px;
-            overflow: hidden;
-        }
-        
-        .member-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-        
-        .member-card:hover .member-image img {
-            transform: scale(1.05);
-        }
-        
-        .member-info {
-            padding: 1.5rem;
-            text-align: center;
-        }
-        
-        .member-info h3 {
-            color: var(--color-maple-red);
-            margin-bottom: 0.5rem;
-        }
-        
-        .member-role {
-            color: var(--color-maple-orange);
-            font-weight: 500;
-            margin-bottom: 1rem;
-            display: block;
-        }
-        
-        .member-bio {
-            color: var(--color-text);
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-        
-        .member-stats {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #eee;
-        }
-        
-        .member-stat {
-            text-align: center;
-        }
-        
-        .member-stat-number {
-            font-weight: 700;
-            color: var(--color-maple-red);
-            font-size: 1.2rem;
-        }
-        
-        .member-stat-label {
-            font-size: 0.8rem;
-            color: var(--color-text-light);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .coop-principles {
-            background-color: var(--color-light-gray);
-            padding: 4rem 0;
-            margin: 4rem 0;
-        }
-        
-        .principles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .principle-card {
-            background-color: var(--color-white);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: var(--transition);
-        }
-        
-        .principle-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .principle-number {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background-color: var(--color-maple-red);
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-        
-        .principle-card h3 {
-            color: var(--color-maple-red);
-            margin-bottom: 1rem;
-        }
-        
-        .cta-join {
-            text-align: center;
-            padding: 4rem 0;
-        }
-        
-        .cta-join h2 {
-            color: var(--color-maple-red);
-            margin-bottom: 1.5rem;
-        }
-        
-        .cta-join p {
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
+      /* Additional styles for the members page */
+      .members-intro {
+        padding: 4rem 0;
+        background-color: var(--color-light-gray);
+        text-align: center;
+      }
+
+      .members-intro h2 {
+        color: var(--color-maple-red);
+        margin-bottom: 1.5rem;
+      }
+
+      .members-intro p {
+        max-width: 800px;
+        margin: 0 auto 2rem;
+        font-size: 1.1rem;
+        line-height: 1.8;
+      }
+
+      .coop-stats {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin: 3rem 0;
+      }
+
+      .stat-item {
+        background-color: var(--color-white);
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        min-width: 200px;
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--color-maple-orange);
+        margin-bottom: 0.5rem;
+        line-height: 1;
+      }
+
+      .stat-label {
+        font-size: 1rem;
+        color: var(--color-text-light);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .members-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+      }
+
+      .member-card {
+        background-color: var(--color-white);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: var(--transition);
+      }
+
+      .member-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .member-image {
+        height: 350px;
+        overflow: hidden;
+      }
+
+      .member-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+      }
+
+      .member-card:hover .member-image img {
+        transform: scale(1.05);
+      }
+
+      .member-info {
+        padding: 1.5rem;
+        text-align: center;
+      }
+
+      .member-info h3 {
+        color: var(--color-maple-red);
+        margin-bottom: 0.5rem;
+      }
+
+      .member-role {
+        color: var(--color-maple-orange);
+        font-weight: 500;
+        margin-bottom: 1rem;
+        display: block;
+      }
+
+      .member-bio {
+        color: var(--color-text);
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+        line-height: 1.7;
+      }
+
+      .member-stats {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #eee;
+      }
+
+      .member-stat {
+        text-align: center;
+      }
+
+      .member-stat-number {
+        font-weight: 700;
+        color: var(--color-maple-red);
+        font-size: 1.2rem;
+      }
+
+      .member-stat-label {
+        font-size: 0.8rem;
+        color: var(--color-text-light);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .coop-principles {
+        background-color: var(--color-light-gray);
+        padding: 4rem 0;
+        margin: 4rem 0;
+      }
+
+      .principles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .principle-card {
+        background-color: var(--color-white);
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: var(--transition);
+      }
+
+      .principle-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .principle-number {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background-color: var(--color-maple-red);
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 40px;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .principle-card h3 {
+        color: var(--color-maple-red);
+        margin-bottom: 1rem;
+      }
+
+      .cta-join {
+        text-align: center;
+        padding: 4rem 0;
+      }
+
+      .cta-join h2 {
+        color: var(--color-maple-red);
+        margin-bottom: 1.5rem;
+      }
+
+      .cta-join p {
+        max-width: 700px;
+        margin: 0 auto 2rem;
+        font-size: 1.1rem;
+        line-height: 1.8;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header class="site-header">
-        <div class="container">
-            <div class="logo">
-                <h1>Bolton's</h1>
-                <p>Vermont Distilling Company</p>
-            </div>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="products.html">Our Beers</a></li>
-                    <li><a href="about.html">Our Story</a></li>
-                    <li><a href="members.html" class="active">Owners</a></li>
-                    <li><a href="tours.html" class="btn">Book a Tour</a></li>
-                </ul>
-            </nav>
+      <div class="container">
+        <div class="logo">
+          <h1>Bolton's</h1>
+          <p>Vermont Distilling Company</p>
         </div>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Our Beers</a></li>
+            <li><a href="about.html">Our Story</a></li>
+            <li><a href="members.html" class="active">Owners</a></li>
+            <li><a href="tours.html" class="btn">Book a Tour</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
 
     <main>
-        <section class="page-header">
-            <div class="container">
-                <h1>Our Owners</h1>
-                <p>Meet the people behind Bolton's Vermont Distilling Company</p>
-            </div>
-        </section>
+      <section class="page-header">
+        <div class="container">
+          <h1>Our Owners</h1>
+          <p>Meet the people behind Bolton's Vermont Distilling Company</p>
+        </div>
+      </section>
 
-        <section class="members-intro">
-            <div class="container">
-                <h2>Proudly Employee-Owned</h2>
-                <p>In 1985, Bolton's transitioned to a worker-owned cooperative, ensuring that the people who make our products share in the company's success. Today, our cooperative is made up of passionate individuals who are committed to crafting exceptional maple-infused beers while upholding our values of quality, sustainability, and community.</p>
-                
-                <div class="coop-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">24</div>
-                        <div class="stat-label">Owners</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">150+</div>
-                        <div class="stat-label">Years Combined Experience</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Vermont Proud</div>
-                    </div>
+      <section class="members-intro">
+        <div class="container">
+          <h2>Proudly Employee-Owned</h2>
+          <p>
+            In 1985, Bolton's transitioned to a worker-owned cooperative,
+            ensuring that the people who make our products share in the
+            company's success. Today, our cooperative is made up of passionate
+            individuals who are committed to crafting exceptional maple-infused
+            beers while upholding our values of quality, sustainability, and
+            community.
+          </p>
+
+          <div class="coop-stats">
+            <div class="stat-item">
+              <div class="stat-number">24</div>
+              <div class="stat-label">Owners</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">150+</div>
+              <div class="stat-label">Years Combined Experience</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Vermont Proud</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="container">
+        <h2 class="section-title">Meet Our Team</h2>
+
+        <div class="members-grid">
+          <!-- Aisha Johnson -->
+          <article class="member-card">
+            <div class="member-image">
+              <img src="images/aisha.jpg" alt="Aisha Johnson">
+            </div>
+            <div class="member-info">
+              <h3>Aisha Johnson</h3>
+              <span class="member-role">Master Brewer</span>
+              <p class="member-bio">
+                Aisha brings creativity and precision to our brewing process.
+                Her innovative approach to maple-infused beers has won multiple
+                awards for Bolton's.
+              </p>
+              <div class="member-stats">
+                <div class="member-stat">
+                  <div class="member-stat-number">15+</div>
+                  <div class="member-stat-label">Awards</div>
                 </div>
-            </div>
-        </section>
-
-        <section class="container">
-            <h2 class="section-title">Meet Our Team</h2>
-            
-            <div class="members-grid">
-                <!-- Aisha Johnson -->
-                <article class="member-card">
-                    <div class="member-image">
-                        <img src="images/aisha.jpg" alt="Aisha Johnson">
-                    </div>
-                    <div class="member-info">
-                        <h3>Aisha Johnson</h3>
-                        <span class="member-role">Master Brewer</span>
-                        <p class="member-bio">Aisha brings creativity and precision to our brewing process. Her innovative approach to maple-infused beers has won multiple awards for Bolton's.</p>
-                        <div class="member-stats">
-                            <div class="member-stat">
-                                <div class="member-stat-number">15+</div>
-                                <div class="member-stat-label">Awards</div>
-                            </div>
-                            <div class="member-stat">
-                                <div class="member-stat-number">50+</div>
-                                <div class="member-stat-label">Recipes</div>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Ian R. Moore -->
-                <article class="member-card">
-                    <div class="member-image">
-                        <img src="images/ian.jpg" alt="Ian R. Moore">
-                    </div>
-                    <div class="member-info">
-                        <h3>Ian R. Moore</h3>
-                        <span class="member-role">Head of Marketing</span>
-                        <p class="member-bio">Ian leads our marketing department with a focus on expanding Bolton's presence. He's known for his direct approach and extensive network in the industry.</p>
-                        <div class="member-stats">
-                            <div class="member-stat">
-                                <div class="member-stat-number">3x</div>
-                                <div class="member-stat-label">Growth</div>
-                            </div>
-                            <div class="member-stat">
-                                <div class="member-stat-number">98%</div>
-                                <div class="member-stat-label">Brand Recognition</div>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Elena Rodriguez -->
-                <article class="member-card">
-                    <div class="member-image">
-                        <img src="images/elena.jpg" alt="Elena Rodriguez">
-                    </div>
-                    <div class="member-info">
-                        <h3>Elena Rodriguez</h3>
-                        <span class="member-role">Sustainability Director</span>
-                        <p class="member-bio">Elena ensures our operations remain environmentally friendly and sustainable. Her initiatives have reduced our carbon footprint by 40% in the last three years.</p>
-                        <div class="member-stats">
-                            <div class="member-stat">
-                                <div class="member-stat-number">40%</div>
-                                <div class="member-stat-label">Less Waste</div>
-                            </div>
-                            <div class="member-stat">
-                                <div class="member-stat-number">100%</div>
-                                <div class="member-stat-label">Renewable Energy</div>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Tyler Park -->
-                <article class="member-card">
-                    <div class="member-image">
-                        <img src="images/tyler.jpg" alt="Tyler Park">
-                    </div>
-                    <div class="member-info">
-                        <h3>Tyler Park</h3>
-                        <span class="member-role">Senior Software Engineer</span>
-                        <p class="member-bio">Tyler keeps our digital infrastructure running smoothly, from our website to our inventory systems. He's known for his efficient (if sometimes unorthodox) coding style.</p>
-                        <div class="member-stats">
-                            <div class="member-stat">
-                                <div class="member-stat-number">99.9%</div>
-                                <div class="member-stat-label">Uptime</div>
-                            </div>
-                            <div class="member-stat">
-                                <div class="member-stat-number">5x</div>
-                                <div class="member-stat-label">Faster Load</div>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <section class="coop-principles">
-            <div class="container">
-                <h2 class="section-title">Our Cooperative Principles</h2>
-                <p class="text-center" style="max-width: 800px; margin: 0 auto 3rem;">As a worker-owned cooperative, we adhere to the seven cooperative principles that guide our business and our relationships with our members and community.</p>
-                
-                <div class="principles-grid">
-                    <div class="principle-card">
-                        <div class="principle-number">1</div>
-                        <h3>Voluntary & Open Membership</h3>
-                        <p>Our cooperative is open to all who want to join and are willing to accept the responsibilities of membership.</p>
-                    </div>
-                    
-                    <div class="principle-card">
-                        <div class="principle-number">2</div>
-                        <h3>Democratic Member Control</h3>
-                        <p>Each member-owner has an equal say in how we run our business—one member, one vote.</p>
-                    </div>
-                    
-                    <div class="principle-card">
-                        <div class="principle-number">3</div>
-                        <h3>Member Economic Participation</h3>
-                        <p>Members contribute equitably to, and democratically control, the capital of the cooperative.</p>
-                    </div>
-                    
-                    <div class="principle-card">
-                        <div class="principle-number">4</div>
-                        <h3>Autonomy & Independence</h3>
-                        <p>We are an independent organization controlled by our members, not outside investors.</p>
-                    </div>
-                    
-                    <div class="principle-card">
-                        <div class="principle-number">5</div>
-                        <h3>Education & Training</h3>
-                        <p>We provide education and training for our members, elected representatives, and employees.</p>
-                    </div>
-                    
-                    <div class="principle-card">
-                        <div class="principle-number">6</div>
-                        <h3>Cooperation Among Cooperatives</h3>
-                        <p>We work together with other cooperatives to strengthen the cooperative movement.</p>
-                    </div>
-                    
-                    <div class="principle-card">
-                        <div class="principle-number">7</div>
-                        <h3>Concern for Community</h3>
-                        <p>We work for the sustainable development of our communities through policies accepted by our members.</p>
-                    </div>
+                <div class="member-stat">
+                  <div class="member-stat-number">50+</div>
+                  <div class="member-stat-label">Recipes</div>
                 </div>
+              </div>
             </div>
-        </section>
+          </article>
 
-        <section class="cta-join">
-            <div class="container">
-                <h2>Join Our Cooperative</h2>
-                <p>Interested in becoming a worker-owner at Bolton's Vermont Distilling Company? We're always looking for passionate individuals who share our values and commitment to quality.</p>
-                <a href="#" class="btn btn-large">View Current Opportunities</a>
+          <!-- Ian R. Moore -->
+          <article class="member-card">
+            <div class="member-image">
+              <img src="images/ian.jpg" alt="Ian R. Moore">
             </div>
-        </section>
+            <div class="member-info">
+              <h3>Ian R. Moore</h3>
+              <span class="member-role">Head of Marketing</span>
+              <p class="member-bio">
+                Ian leads our marketing department with a focus on expanding
+                Bolton's presence. He's known for his direct approach and
+                extensive network in the industry.
+              </p>
+              <div class="member-stats">
+                <div class="member-stat">
+                  <div class="member-stat-number">3x</div>
+                  <div class="member-stat-label">Growth</div>
+                </div>
+                <div class="member-stat">
+                  <div class="member-stat-number">98%</div>
+                  <div class="member-stat-label">Brand Recognition</div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Elena Rodriguez -->
+          <article class="member-card">
+            <div class="member-image">
+              <img src="images/elena.jpg" alt="Elena Rodriguez">
+            </div>
+            <div class="member-info">
+              <h3>Elena Rodriguez</h3>
+              <span class="member-role">Sustainability Director</span>
+              <p class="member-bio">
+                Elena ensures our operations remain environmentally friendly and
+                sustainable. Her initiatives have reduced our carbon footprint
+                by 40% in the last three years.
+              </p>
+              <div class="member-stats">
+                <div class="member-stat">
+                  <div class="member-stat-number">40%</div>
+                  <div class="member-stat-label">Less Waste</div>
+                </div>
+                <div class="member-stat">
+                  <div class="member-stat-number">100%</div>
+                  <div class="member-stat-label">Renewable Energy</div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Tyler Park -->
+          <article class="member-card">
+            <div class="member-image">
+              <img src="images/tyler.jpg" alt="Tyler Park">
+            </div>
+            <div class="member-info">
+              <h3>Tyler Park</h3>
+              <span class="member-role">Senior Software Engineer</span>
+              <p class="member-bio">
+                Tyler keeps our digital infrastructure running smoothly, from
+                our website to our inventory systems. He's known for his
+                efficient (if sometimes unorthodox) coding style.
+              </p>
+              <div class="member-stats">
+                <div class="member-stat">
+                  <div class="member-stat-number">99.9%</div>
+                  <div class="member-stat-label">Uptime</div>
+                </div>
+                <div class="member-stat">
+                  <div class="member-stat-number">5x</div>
+                  <div class="member-stat-label">Faster Load</div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="coop-principles">
+        <div class="container">
+          <h2 class="section-title">Our Cooperative Principles</h2>
+          <p class="text-center" style="max-width: 800px; margin: 0 auto 3rem">
+            As a worker-owned cooperative, we adhere to the seven cooperative
+            principles that guide our business and our relationships with our
+            members and community.
+          </p>
+
+          <div class="principles-grid">
+            <div class="principle-card">
+              <div class="principle-number">1</div>
+              <h3>Voluntary & Open Membership</h3>
+              <p>
+                Our cooperative is open to all who want to join and are willing
+                to accept the responsibilities of membership.
+              </p>
+            </div>
+
+            <div class="principle-card">
+              <div class="principle-number">2</div>
+              <h3>Democratic Member Control</h3>
+              <p>
+                Each member-owner has an equal say in how we run our
+                business—one member, one vote.
+              </p>
+            </div>
+
+            <div class="principle-card">
+              <div class="principle-number">3</div>
+              <h3>Member Economic Participation</h3>
+              <p>
+                Members contribute equitably to, and democratically control, the
+                capital of the cooperative.
+              </p>
+            </div>
+
+            <div class="principle-card">
+              <div class="principle-number">4</div>
+              <h3>Autonomy & Independence</h3>
+              <p>
+                We are an independent organization controlled by our members,
+                not outside investors.
+              </p>
+            </div>
+
+            <div class="principle-card">
+              <div class="principle-number">5</div>
+              <h3>Education & Training</h3>
+              <p>
+                We provide education and training for our members, elected
+                representatives, and employees.
+              </p>
+            </div>
+
+            <div class="principle-card">
+              <div class="principle-number">6</div>
+              <h3>Cooperation Among Cooperatives</h3>
+              <p>
+                We work together with other cooperatives to strengthen the
+                cooperative movement.
+              </p>
+            </div>
+
+            <div class="principle-card">
+              <div class="principle-number">7</div>
+              <h3>Concern for Community</h3>
+              <p>
+                We work for the sustainable development of our communities
+                through policies accepted by our members.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-join">
+        <div class="container">
+          <h2>Join Our Cooperative</h2>
+          <p>
+            Interested in becoming a worker-owner at Bolton's Vermont Distilling
+            Company? We're always looking for passionate individuals who share
+            our values and commitment to quality.
+          </p>
+          <a href="#" class="btn btn-large">View Current Opportunities</a>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-about">
-                    <h3>Bolton's Vermont Distilling Co.</h3>
-                    <p>Proudly crafting maple-infused beers since 1870</p>
-                </div>
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="products.html">Our Beers</a></li>
-                        <li><a href="about.html">Our Story</a></li>
-                        <li><a href="members.html">Owners</a></li>
-                        <li><a href="tours.html">Book a Tour</a></li>
-                    </ul>
-                </div>
-                <div class="footer-contact">
-                    <h4>Contact Us</h4>
-                    <p>123 Brewers Lane<br>Maple Acres, VT 00000</p>
-                    <p>info@boltons.beer<br>(802) 555-5555</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Bolton's Vermont Distilling Company. All rights reserved.</p>
-            </div>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-about">
+            <h3>Bolton's Vermont Distilling Co.</h3>
+            <p>Proudly crafting maple-infused beers since 1870</p>
+          </div>
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="products.html">Our Beers</a></li>
+              <li><a href="about.html">Our Story</a></li>
+              <li><a href="members.html">Owners</a></li>
+              <li><a href="tours.html">Book a Tour</a></li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h4>Contact Us</h4>
+            <p>123 Brewers Lane<br>Maple Acres, VT 00000</p>
+            <p>info@boltons.beer<br>(802) 555-5555</p>
+          </div>
         </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 Bolton's Vermont Distilling Company. All rights
+            reserved.
+          </p>
+        </div>
+      </div>
     </footer>
 
     <script src="js/main.js"></script>
-</body>
+  </body>
 </html>

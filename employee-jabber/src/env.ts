@@ -1,7 +1,9 @@
 import { decodeBase64 } from "jsr:@std/encoding/base64";
 
 export const enableDebugStats = booleanEnvVar("ENABLE_DEBUG_STATS");
-export const enabledDebugConversations = booleanEnvVar("ENABLE_DEBUG_CONVERSATIONS");
+export const enabledDebugConversations = booleanEnvVar(
+  "ENABLE_DEBUG_CONVERSATIONS",
+);
 export const enabledDebugATProto = booleanEnvVar("ENABLE_DEBUG_ATPROTO");
 export const minActionDelayInMs = numberEnvVar("MIN_ACTION_DELAY_MS") ?? 1000;
 export const maxActionDelayInMs = numberEnvVar("MAX_ACTION_DELAY_MS") ??
@@ -11,6 +13,9 @@ export const postmarkWebhookUsername = requiredStringEnvVar(
 );
 export const postmarkWebhookPassword = requiredStringEnvVar(
   "POSTMARK_WEBHOOK_PASSWORD",
+);
+export const postmarkApiKey = requiredStringEnvVar(
+  "POSTMARK_API_KEY",
 );
 export const deepseekApiKey = requiredStringEnvVar("DEEPSEEK_API_KEY");
 export const employees =

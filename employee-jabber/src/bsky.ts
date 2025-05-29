@@ -3,7 +3,7 @@ import type {} from "npm:@atcute/atproto";
 
 import * as Db from "./persistence.ts";
 import { Employee } from "./models.ts";
-import {Err, Ok, Result} from "./result.ts";
+import { Err, Ok, Result } from "./result.ts";
 
 export async function login(
   { name, email, bskyIdentifier, bskyPassword }: Employee,
@@ -63,5 +63,7 @@ export async function post(
     return Ok.wrap(undefined);
   }
 
-  return Err.wrap(new Error(`ATProto Record Creation was not valid for: ${name}`));
+  return Err.wrap(
+    new Error(`ATProto Record Creation was not valid for: ${name}`),
+  );
 }

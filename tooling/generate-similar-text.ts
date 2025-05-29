@@ -26,7 +26,8 @@ if (!inputFile) {
 }
 
 const inputText = await Deno.readTextFile(inputFile);
-const systemPrompt = `You are an extremely skilled writer and expert pattern matcher. 
+const systemPrompt =
+  `You are an extremely skilled writer and expert pattern matcher. 
 
 You are going to be provided with a prompt and a sample piece of text. Your job is to match the style, contents, and format of the sample and write your own version.
 
@@ -34,7 +35,7 @@ Feel free to be creative and take some liberties, so long as you follow the spir
 
 Here is the prompt:
 
-${prompt ?? 'Please match as closely as possible'}
+${prompt ?? "Please match as closely as possible"}
 
 Here is a sample:
 
@@ -55,7 +56,7 @@ const completion = await openai.chat.completions.create({
     {
       role: "system",
       content: systemPrompt,
-    }
+    },
   ],
 });
 

@@ -7,7 +7,7 @@ const {
   "secret-name": secretName,
 } = parseArgs(Deno.args, {
   string: ["input-file", "secret-name", "output-file"],
-  collect: ['output-file'],
+  collect: ["output-file"],
   alias: {
     "input-file": ["i", "input"],
     "output-file": ["o", "output"],
@@ -20,7 +20,9 @@ if (!inputFile) {
     "An input file name is required, e.g. employees.json or storyline.txt",
   );
 } else if (!outputFiles.length) {
-  throw new Error("At least one output file name is required, e.g. .env or .env.dev");
+  throw new Error(
+    "At least one output file name is required, e.g. .env or .env.dev",
+  );
 } else if (!secretName) {
   throw new Error(
     "A secret name is required, e.g. B64_ENCODED_EMPLOYEES or B64_ENCODED_STORYLINE",
@@ -30,8 +32,11 @@ if (!inputFile) {
 const inputText = await Deno.readTextFile(inputFile);
 const encoded = encodeBase64(inputText);
 
-const regex = RegExp(`${secretName}=.*\n?`, 'g');
+const regex = RegExp(`${secretName}=.*\n?`, "g");
 for (const outputFile of outputFiles) {
   const outputText = await Deno.readTextFile(outputFile);
-  await Deno.writeTextFile(outputFile, outputText.replaceAll(regex, `${secretName}=${encoded}\n`));
+  await Deno.writeTextFile(
+    outputFile,
+    outputText.replaceAll(regex, `${secretName}=${encoded}\n`),
+  );
 }

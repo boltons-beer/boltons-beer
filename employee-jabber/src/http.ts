@@ -1,16 +1,16 @@
-import {Hono} from "npm:hono@4.7.10";
+import { Hono } from "npm:hono@4.7.10";
 import { basicAuth } from "npm:hono/basic-auth";
 import { zValidator } from "npm:@hono/zod-validator";
 
 import {
-    enabledDebugATProto,
-    enabledDebugConversations,
-    enableDebugStats,
-    postmarkWebhookPassword,
-    postmarkWebhookUsername
+  enabledDebugATProto,
+  enabledDebugConversations,
+  enableDebugStats,
+  postmarkWebhookPassword,
+  postmarkWebhookUsername,
 } from "./env.ts";
-import {InboundEmail} from "./models.ts";
-import type {ChatMessage, ATProtoData} from "./persistence.ts";
+import { InboundEmail } from "./models.ts";
+import type { ATProtoData, ChatMessage } from "./persistence.ts";
 import * as Stats from "./stats.ts";
 import * as Db from "./persistence.ts";
 import * as Queue from "./queue.ts";
@@ -19,111 +19,125 @@ import * as Bsky from "./bsky.ts";
 const app = new Hono();
 
 if (enableDebugStats) {
-    app.get("/debug/stats", (c) =>
-        c.json({
-            "//":
-                "These are the stats from this instance, they do not persist between restarts. This is just for debugging purposes.",
-            ...Stats.get(),
-        }));
+  app.get("/debug/stats", (c) =>
+    c.json({
+      "//":
+        "These are the stats from this instance, they do not persist between restarts. This is just for debugging purposes.",
+      ...Stats.get(),
+    }));
 }
 
 if (enabledDebugConversations) {
-    app.get("/debug/convos", (c) => {
-        const conversationsByName: Record<string, ChatMessage[]> = {};
-        for (const [email, conversation] of Db.rows('conversations')) {
-            const {name} = Db.query('employees', email)!;
-            conversationsByName[name] = conversation;
-        }
+  app.get("/debug/convos", (c) => {
+    const conversationsByName: Record<string, ChatMessage[]> = {};
+    for (const [email, conversation] of Db.rows("conversations")) {
+      const { name } = Db.query("employees", email)!;
+      conversationsByName[name] = conversation;
+    }
 
-        return c.json({
-            "//":
-                "These are the conversations from this instance, they do not persist between restarts. This is just for debugging purposes.",
-            ...conversationsByName,
-        });
+    return c.json({
+      "//":
+        "These are the conversations from this instance, they do not persist between restarts. This is just for debugging purposes.",
+      ...conversationsByName,
     });
+  });
 }
 
 if (enabledDebugATProto) {
-    app.get("/debug/atproto", (c) => {
-        const atProtoDataByName: Record<
-            string,
-            Pick<ATProtoData, "did" | "pdsUri">
-        > = {};
-        for (const [email, atProtoData] of Db.rows('atProtoData')) {
-            const {name} = Db.query('employees', email)!;
-            const {did, pdsUri} = atProtoData;
-            atProtoDataByName[name] = {
-                did,
-                pdsUri,
-            };
-        }
+  app.get("/debug/atproto", (c) => {
+    const atProtoDataByName: Record<
+      string,
+      Pick<ATProtoData, "did" | "pdsUri">
+    > = {};
+    for (const [email, atProtoData] of Db.rows("atProtoData")) {
+      const { name } = Db.query("employees", email)!;
+      const { did, pdsUri } = atProtoData;
+      atProtoDataByName[name] = {
+        did,
+        pdsUri,
+      };
+    }
 
-        return c.json({
-            "//":
-                "This is the various in-use ATProto data from this instance, they do not persist between restarts. This is just for debugging purposes.",
-            ...atProtoDataByName,
-        });
+    return c.json({
+      "//":
+        "This is the various in-use ATProto data from this instance, they do not persist between restarts. This is just for debugging purposes.",
+      ...atProtoDataByName,
     });
+  });
 }
 
 app.post(
-    "/",
-    basicAuth({
-        username: postmarkWebhookUsername,
-        password: postmarkWebhookPassword,
-    }),
-    zValidator("json", InboundEmail),
-    async (c) => {
-        const {
-            From: senderEmailAddress,
-            OriginalRecipient: recipientEmailAddress,
-            Subject: emailSubject,
-            TextBody: emailTextBody,
-            HtmlBody: emailHtmlBody,
-            Bcc: bcc,
-            Cc: cc,
-        } = c.req.valid("json");
+  "/",
+  basicAuth({
+    username: postmarkWebhookUsername,
+    password: postmarkWebhookPassword,
+  }),
+  zValidator("json", InboundEmail),
+  async (c) => {
+    const {
+      From: senderEmailAddress,
+      OriginalRecipient: recipientEmailAddress,
+      Subject: emailSubject,
+      TextBody: emailTextBody,
+      HtmlBody: emailHtmlBody,
+      Bcc: bcc,
+      Cc: cc,
+    } = c.req.valid("json");
 
-        const emailBody = emailHtmlBody ?? emailTextBody;
-        if (!emailBody) {
-            console.warn(
-                `Email from ${senderEmailAddress} was sent with an empty body`,
-            );
-            Stats.incrementOverall("errors");
-            return c.json({}, 200);
-        }
+    const emailBody = emailHtmlBody?.trim() ? emailHtmlBody : emailTextBody;
+    if (!emailBody) {
+      console.warn(
+        `Email from ${senderEmailAddress} was sent with an empty body`,
+      );
+      Stats.incrementOverall("errors");
+      return c.json({}, 200);
+    }
 
-        Stats.incrementOverall("emailsReceived");
-        const employee = Db.query("employees", recipientEmailAddress);
-        if (!employee) {
-            console.warn(
-                `Could not find employee by email: ${recipientEmailAddress}`,
-            );
-            Stats.incrementOverall("errors");
-            return c.json({}, 200);
-        }
+    Stats.incrementOverall("emailsReceived");
 
-        // We can skip incrementing the overall stats for emailReceived since we had counted it just before
-        Stats.incrementForEmployee(employee.name, "emailsReceived", "skip-overall");
-        const loginResult = await Bsky.login(employee);
-        if (loginResult.kind === 'err') {
-            Stats.incrementForEmployee(employee.name, "errors");
-            console.error(loginResult.value);
-            return c.json({}, 200);
-        }
+    const emailAddresses = new Set([
+      recipientEmailAddress,
+      ...bcc?.split(",") ?? [],
+      ...cc?.split(",") ?? [],
+    ].filter((emailAddress) => emailAddress.trim() != ""));
+    for (const emailAddress of emailAddresses) {
+      const employee = Db.query("employees", emailAddress);
+      if (!employee) {
+        console.warn(
+          `Could not find employee by email: ${emailAddress}`,
+        );
+        Stats.incrementOverall("errors");
+        continue;
+      }
 
-        const emailPromptId = await Queue.storeAsBlob(`From: ${senderEmailAddress}\n${cc ? `CC: ${cc}\n` : ""}${
-            cc ? `BCC: ${bcc}\n` : ""
-        }Subject: ${emailSubject}\nBody:\n\n${emailBody}`);
+      // We can skip incrementing the overall stats for emailReceived since we had counted it just before
+      Stats.incrementForEmployee(
+        employee.name,
+        "emailsReceived",
+        "skip-overall",
+      );
+      const loginResult = await Bsky.login(employee);
+      if (loginResult.kind === "err") {
+        Stats.incrementForEmployee(employee.name, "errors");
+        console.error(loginResult.value);
+        continue;
+      }
 
-        await Queue.enqueue({
-            employee,
-            systemPrompt: employee.prompt,
-            emailPromptId: emailPromptId,
-        });
+      const ccLine = `${cc ? `CC: ${cc}\n` : ""}`;
+      const bccLine = `${bcc ? `BCC: ${bcc}\n` : ""}`;
+      const emailPromptId = await Queue.storeAsBlob(
+        `To: ${recipientEmailAddress}\nFrom: ${senderEmailAddress}\n${ccLine}${bccLine}Subject: ${emailSubject}\nBody:\n\n${emailBody}`,
+      );
 
-        return c.json({}, 201);
-    },
+      await Queue.enqueue({
+        employee,
+        systemPrompt: employee.prompt,
+        emailPromptId: emailPromptId,
+      });
+    }
+
+    return c.json({}, 201);
+  },
 );
 
 export default app;

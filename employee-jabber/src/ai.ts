@@ -4,7 +4,7 @@ import { deepseekApiKey } from "./env.ts";
 import { ChatMessage } from "./persistence.ts";
 import { randomIntFromInterval } from "./utils.ts";
 import * as Db from "./persistence.ts";
-import { Employee } from "./models.ts";
+import { AiNextAction, AiNextActionList, Employee } from "./models.ts";
 import { Err, Ok, Result } from "./result.ts";
 
 const openai = new OpenAI({
@@ -26,7 +26,8 @@ const MAX_CONVERSATION_TOKENS: number = 67336;
 const EXPECTED_POST_LENGTH: number = 342;
 
 // The number of tokens budgeted for everything before the response
-const MAX_PREAMBLE_TOKENS: number = MAX_CONVERSATION_TOKENS - EXPECTED_POST_LENGTH;
+const MAX_PREAMBLE_TOKENS: number = MAX_CONVERSATION_TOKENS -
+  EXPECTED_POST_LENGTH;
 
 // Estimate the number of tokens for the conversation
 // Generally:
@@ -41,32 +42,39 @@ export function estimateTokens(message: ChatMessage): number {
 }
 
 export function truncateConversationIfTooLong(
-    conversation: ChatMessage[]
+  conversation: ChatMessage[],
 ): Result<ChatMessage[]> {
   const systemMessage = conversation[0];
-  if (systemMessage?.role !== 'system') {
-    return Err.wrap(new Error('First message in a conversation must be a system message'));
+  if (systemMessage?.role !== "system") {
+    return Err.wrap(
+      new Error("First message in a conversation must be a system message"),
+    );
   }
 
   const userMessage = conversation[conversation.length - 1];
-  if (userMessage?.role !== 'user') {
-    return Err.wrap(new Error('Most recent message in a conversation must be a user message'));
+  if (userMessage?.role !== "user") {
+    return Err.wrap(
+      new Error("Most recent message in a conversation must be a user message"),
+    );
   }
 
   const systemMessageTokenLength = estimateTokens(systemMessage);
-  const userMessageTokenLength= estimateTokens(userMessage);
+  const userMessageTokenLength = estimateTokens(userMessage);
 
   const truncatedConversation = [userMessage];
-  let remainingTokenBudget = MAX_PREAMBLE_TOKENS - systemMessageTokenLength - userMessageTokenLength;
+  let remainingTokenBudget = MAX_PREAMBLE_TOKENS - systemMessageTokenLength -
+    userMessageTokenLength;
 
-  for (const message of conversation.toReversed().slice(1, conversation.length - 1)) {
+  for (
+    const message of conversation.toReversed().slice(1, conversation.length - 1)
+  ) {
     const tokenLength = estimateTokens(message);
     if (tokenLength > remainingTokenBudget) {
       continue;
     }
 
     remainingTokenBudget -= tokenLength;
-    truncatedConversation.push(message)
+    truncatedConversation.push(message);
   }
 
   return Ok.wrap([...truncatedConversation, systemMessage].toReversed());
@@ -74,7 +82,7 @@ export function truncateConversationIfTooLong(
 
 export async function converse(
   { queueItemId, employee, systemPrompt, userPrompt }: ConversationArgs,
-): Promise<Result<string>> {
+): Promise<Result<AiNextAction[]>> {
   const { name, email } = employee;
   const conversationHistoryResult = truncateConversationIfTooLong([
     ...Db.query("conversations", email, [{
@@ -89,7 +97,7 @@ export async function converse(
     },
   ]);
 
-  if (conversationHistoryResult.kind === 'err') {
+  if (conversationHistoryResult.kind === "err") {
     return conversationHistoryResult;
   }
 
@@ -130,8 +138,7 @@ export async function converse(
   ]);
 
   try {
-    const { response } = JSON.parse(chatResponse);
-    return Ok.wrap(response);
+    return Ok.wrap(AiNextActionList.parse(JSON.parse(chatResponse)));
   } catch (e) {
     return Err.wrap(
       new Error(

@@ -1,0 +1,28 @@
+name: Deploy Corporate Site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "corporate-site/**"
+      - ".github/workflows/deploy-corporate-site.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: corporate-site
+          branch: gh-pages
+          clean: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target-folder: .

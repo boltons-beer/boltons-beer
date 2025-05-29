@@ -1,23 +1,67 @@
 {
   "version": "5",
   "specifiers": {
+    "jsr:@deno/kv-utils@~0.1.3": "0.1.3",
+    "jsr:@kitsonk/kv-toolbox@*": "0.28.1",
+    "jsr:@std/assert@1": "1.0.13",
+    "jsr:@std/bytes@1": "1.0.6",
+    "jsr:@std/bytes@^1.0.3": "1.0.6",
     "jsr:@std/cli@*": "1.0.17",
+    "jsr:@std/crypto@1": "1.0.5",
     "jsr:@std/encoding@*": "1.0.10",
+    "jsr:@std/encoding@1": "1.0.10",
+    "jsr:@std/encoding@^1.0.5": "1.0.10",
+    "jsr:@std/media-types@1": "1.1.0",
     "npm:@atcute/atproto@^3.0.2": "3.0.2",
+    "npm:@atcute/client@*": "4.0.2",
     "npm:@atcute/client@^4.0.2": "4.0.2",
+    "npm:@hono/zod-validator@*": "0.5.0_hono@4.7.10_zod@3.25.28",
     "npm:@hono/zod-validator@0.5": "0.5.0_hono@4.7.10_zod@3.25.28",
+    "npm:hono@*": "4.7.10",
+    "npm:hono@4.7.10": "4.7.10",
     "npm:hono@^4.7.10": "4.7.10",
     "npm:openai@4.103.0": "4.103.0_zod@3.25.28",
     "npm:openai@^4.103.0": "4.103.0_zod@3.25.28",
     "npm:postmark@^4.0.5": "4.0.5",
+    "npm:zod@*": "3.25.28",
     "npm:zod@^3.25.28": "3.25.28"
   },
   "jsr": {
+    "@deno/kv-utils@0.1.3": {
+      "integrity": "f3877510f82ce78a1946f6fc9727393d44421928c971572c18d90f9206448e98",
+      "dependencies": [
+        "jsr:@std/bytes@^1.0.3",
+        "jsr:@std/encoding@^1.0.5"
+      ]
+    },
+    "@kitsonk/kv-toolbox@0.28.1": {
+      "integrity": "f0582d309de12da79c9707742616ae7e433ae05509ac044b19e7487ba1cf79d3",
+      "dependencies": [
+        "jsr:@deno/kv-utils",
+        "jsr:@std/assert",
+        "jsr:@std/bytes@1",
+        "jsr:@std/crypto",
+        "jsr:@std/encoding@1",
+        "jsr:@std/media-types"
+      ]
+    },
+    "@std/assert@1.0.13": {
+      "integrity": "ae0d31e41919b12c656c742b22522c32fb26ed0cba32975cb0de2a273cb68b29"
+    },
+    "@std/bytes@1.0.6": {
+      "integrity": "f6ac6adbd8ccd99314045f5703e23af0a68d7f7e58364b47d2c7f408aeb5820a"
+    },
     "@std/cli@1.0.17": {
       "integrity": "e15b9abe629e17be90cc6216327f03a29eae613365f1353837fa749aad29ce7b"
     },
+    "@std/crypto@1.0.5": {
+      "integrity": "0dcfbb319fe0bba1bd3af904ceb4f948cde1b92979ec1614528380ed308a3b40"
+    },
     "@std/encoding@1.0.10": {
       "integrity": "8783c6384a2d13abd5e9e87a7ae0520a30e9f56aeeaa3bdf910a3eaaf5c811a1"
+    },
+    "@std/media-types@1.1.0": {
+      "integrity": "c9d093f0c05c3512932b330e3cc1fe1d627b301db33a4c2c2185c02471d6eaa4"
     }
   },
   "npm": {
