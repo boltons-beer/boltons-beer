@@ -1,20 +1,22 @@
 {
   "version": "0.1.0",
   "tasks": {
-    "dev": "deno run --watch src/main.ts",
+    "start": "deno run --unstable-kv --env-file=.env.prod -A src/main.ts",
+    "start:dev": "deno run --unstable-kv --env-file=.env.prod -A --watch src/main.ts",
     "push-secrets": "deno run -A ../tooling/env-to-fly-secrets.ts --i .env.prod"
   },
   "imports": {
     "@atcute/atproto": "npm:@atcute/atproto@^3.0.2",
     "@atcute/client": "npm:@atcute/client@^4.0.2",
     "@atcute/bluesky-threading": "npm:@atcute/bluesky-threading@^5.0.3",
+    "@atcute/lexicons": "npm:@atcute/lexicons@^1.0.4",
     "@hono/zod-validator": "npm:@hono/zod-validator@^0.5.0",
     "@kitsonk/kv-toolbox": "jsr:@kitsonk/kv-toolbox@^0.28.1",
-    "@std/assert": "jsr:@std/assert@1",
     "@std/encoding": "jsr:@std/encoding@^1.0.10",
-    "hono": "npm:hono@^4.7.10",
-    "openai": "npm:openai@^4.103.0",
+    "hono": "npm:hono@^4.7.11",
+    "limiter": "npm:limiter@^3.0.0",
+    "openai": "npm:openai@^5.1.1",
     "postmark": "npm:postmark@^4.0.5",
-    "zod": "npm:zod@^3.25.28"
+    "zod": "npm:zod@^3.25.55"
   }
 }

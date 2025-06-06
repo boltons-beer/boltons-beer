@@ -1,6 +1,6 @@
-import { Client, CredentialManager, ok } from "npm:@atcute/client";
-import { publishThread } from "npm:@atcute/bluesky-threading";
-import type {} from "npm:@atcute/atproto";
+import { Client, CredentialManager, ok } from "@atcute/client";
+import { publishThread } from "@atcute/bluesky-threading";
+import type {} from "@atcute/atproto";
 
 import * as Db from "./persistence.ts";
 import { Employee } from "./models.ts";

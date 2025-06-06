@@ -1,15 +1,15 @@
-import OpenAI from "npm:openai@4.103.0";
+import OpenAI from "openai";
 
-import { deepseekApiKey } from "./env.ts";
 import { ChatMessage } from "./persistence.ts";
 import { randomIntFromInterval } from "./utils.ts";
+import * as Env from "./env.ts";
 import * as Db from "./persistence.ts";
 import { AiNextAction, AiNextActionList, Employee } from "./models.ts";
 import { Err, Ok, Result } from "./result.ts";
 
 const openai = new OpenAI({
-  baseURL: "https://api.deepseek.com",
-  apiKey: deepseekApiKey,
+  baseURL: Env.ai.providerUrl,
+  apiKey: Env.ai.providerApiKey,
 });
 
 type ConversationArgs = {
@@ -19,14 +19,11 @@ type ConversationArgs = {
   userPrompt: string;
 };
 
-// Max token length of a conversation as per Deepseek's guidelines
-const MAX_CONVERSATION_TOKENS: number = 67336;
-
 // Maximum Bsky post length + json format
 const EXPECTED_POST_LENGTH: number = 342;
 
 // The number of tokens budgeted for everything before the response
-const MAX_PREAMBLE_TOKENS: number = MAX_CONVERSATION_TOKENS -
+const MAX_PREAMBLE_TOKENS: number = Env.ai.maxConversationTokens -
   EXPECTED_POST_LENGTH;
 
 // Estimate the number of tokens for the conversation
@@ -36,6 +33,8 @@ const MAX_PREAMBLE_TOKENS: number = MAX_CONVERSATION_TOKENS -
 // 1 Chinese character ≈ 0.6 token.
 //
 // See: https://api-docs.deepseek.com/quick_start/token_usage
+// Other providers may calculate it differently, but this generally
+// holds up well across provides
 export function estimateTokens(message: ChatMessage): number {
   // When estimating, use the larger number just to be safe
   return message.content.length * 0.6;
@@ -106,8 +105,11 @@ export async function converse(
   let completion: OpenAI.Chat.ChatCompletion;
   try {
     completion = await openai.chat.completions.create({
-      model: "deepseek-reasoner",
-      temperature: randomIntFromInterval(0.01, 0.6),
+      model: Env.ai.modelName,
+      temperature: randomIntFromInterval(
+        Env.ai.minTemperature,
+        Env.ai.maxTemperature,
+      ),
       messages: conversationHistory,
     });
   } catch (e) {

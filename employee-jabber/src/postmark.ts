@@ -1,11 +1,11 @@
-import postmark from "npm:postmark@^4.0.5";
+import postmark from "postmark";
 
 import { Err, Ok, Result } from "./result.ts";
 import { EmailAddress, Employee } from "./models.ts";
+import * as Env from "./env.ts";
 import * as Db from "./persistence.ts";
-import { postmarkApiKey } from "./env.ts";
 
-const client = new postmark.ServerClient(postmarkApiKey);
+const client = new postmark.ServerClient(Env.postmark.apiKey);
 
 type SendArgs = {
   employee: Employee;

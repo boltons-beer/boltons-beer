@@ -1,4 +1,4 @@
-import { employees } from "./env.ts";
+import * as Env from "./env.ts";
 import commonPrompt from "./prompt.ts";
 
 import {
@@ -98,4 +98,4 @@ const parseEmployees = (rawEmployees: unknown[]): EmployeeWithPrompt[] => {
   });
 };
 
-export const employeesWithPrompts = parseEmployees(employees);
+export const employeesWithPrompts = parseEmployees(Env.context.employees);

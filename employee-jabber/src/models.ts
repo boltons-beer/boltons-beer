@@ -1,4 +1,4 @@
-import { z } from "npm:zod/v4";
+import { z } from "zod/v4";
 
 export const EmailAddress = z.string().email();
 export type EmailAddress = z.infer<typeof EmailAddress>;

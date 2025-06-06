@@ -1,8 +1,9 @@
-import { openKvToolbox } from "jsr:@kitsonk/kv-toolbox";
-import { toBlob } from "jsr:@kitsonk/kv-toolbox/blob";
+import { openKvToolbox } from "@kitsonk/kv-toolbox";
+import { toBlob } from "@kitsonk/kv-toolbox/blob";
+import { RateLimiter } from "limiter";
 
 import { randomIntFromInterval } from "./utils.ts";
-import { maxActionDelayInMs, minActionDelayInMs } from "./env.ts";
+import * as Env from "./env.ts";
 import { Employee } from "./models.ts";
 import * as Stats from "./stats.ts";
 import * as Ai from "./ai.ts";
@@ -15,6 +16,12 @@ export type QueueItem = {
   systemPromptId: string;
   emailPromptId: string;
 };
+
+const limiter = new RateLimiter({
+  tokensPerInterval: Env.limits.rateLimitAmount,
+  interval: Env.limits.rateLimitIntervalInMs,
+});
+
 const kv = await openKvToolbox({ path: ":memory:" });
 
 export async function storeAsBlob(item: string): Promise<string> {
@@ -42,7 +49,10 @@ export async function enqueue(
   await kv.enqueue({ ...item, queueItemId }, {
     // We don't want to retry messages, just let them fail
     backoffSchedule: [],
-    delay: randomIntFromInterval(minActionDelayInMs, maxActionDelayInMs),
+    delay: randomIntFromInterval(
+      Env.limits.minActionDelayInMs,
+      Env.limits.maxActionDelayInMs,
+    ),
   });
   return queueItemId;
 }
@@ -57,6 +67,15 @@ export async function startListener(): Promise<void> {
     } = actionItem;
 
     const { name } = employee;
+
+    // Slow things down a bit
+    const wasAllocatedTokens = limiter.tryRemoveTokens(1);
+    if (!wasAllocatedTokens) {
+      console.warn(
+        `[${queueItemId}] Rate limited for: ${name}`,
+      );
+      return;
+    }
 
     const systemPrompt = await takeBlob(systemPromptId);
     if (!systemPrompt) {

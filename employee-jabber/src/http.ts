@@ -1,25 +1,27 @@
-import { Hono } from "npm:hono@4.7.10";
-import { basicAuth } from "npm:hono/basic-auth";
-import { zValidator } from "npm:@hono/zod-validator";
+import { Hono } from "hono";
+import { basicAuth } from "hono/basic-auth";
+import { zValidator } from "@hono/zod-validator";
 
-import {
-  enabledDebugATProto,
-  enabledDebugConversations,
-  enableDebugStats,
-  postmarkWebhookPassword,
-  postmarkWebhookUsername,
-} from "./env.ts";
 import { InboundEmail } from "./models.ts";
 import type { ATProtoData, ChatMessage } from "./persistence.ts";
+import * as Env from "./env.ts";
 import * as Stats from "./stats.ts";
 import * as Db from "./persistence.ts";
 import * as Queue from "./queue.ts";
 import * as Bsky from "./bsky.ts";
-import { undefined } from "zod/v4";
 
 const app = new Hono();
 
-if (enableDebugStats) {
+if (Env.debug.env) {
+  app.get("/debug/env", (c) =>
+      c.json({
+        "//":
+            "This are the values specified in the environment to configure the app, anonymized where appropriate.",
+        ...Env.anonymized,
+      }));
+}
+
+if (Env.debug.stats) {
   app.get("/debug/stats", (c) =>
     c.json({
       "//":
@@ -28,7 +30,7 @@ if (enableDebugStats) {
     }));
 }
 
-if (enabledDebugConversations) {
+if (Env.debug.conversations) {
   app.get("/debug/convos", (c) => {
     const conversationsByName: Record<string, ChatMessage[]> = {};
     for (const [email, conversation] of Db.rows("conversations")) {
@@ -44,7 +46,7 @@ if (enabledDebugConversations) {
   });
 }
 
-if (enabledDebugATProto) {
+if (Env.debug.atProto) {
   app.get("/debug/atproto", (c) => {
     const atProtoDataByName: Record<
       string,
@@ -70,8 +72,8 @@ if (enabledDebugATProto) {
 app.post(
   "/",
   basicAuth({
-    username: postmarkWebhookUsername,
-    password: postmarkWebhookPassword,
+    username: Env.postmark.webhookUsername,
+    password: Env.postmark.webhookPassword,
   }),
   zValidator("json", InboundEmail),
   async (c) => {
@@ -96,11 +98,15 @@ app.post(
 
     Stats.incrementOverall("emailsReceived");
 
-    const emailAddresses = new Set([
-      recipientEmailAddress,
-      ...bcc?.split(",") ?? [],
-      ...cc?.split(",") ?? [],
-    ].filter((emailAddress) => emailAddress.trim() != ""));
+    const emailAddresses = new Set(
+      [
+        recipientEmailAddress,
+        ...bcc?.split(",") ?? [],
+        ...cc?.split(",") ?? [],
+      ].map((emailAddress) => emailAddress.trim()).filter((emailAddress) =>
+        emailAddress != ""
+      ),
+    );
     for (const emailAddress of emailAddresses) {
       const employee = Db.query("employees", emailAddress);
       if (!employee) {

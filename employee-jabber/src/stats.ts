@@ -40,3 +40,14 @@ export function incrementForEmployee(
 
   incrementOverall(key);
 }
+
+export function getForEmployee(name: string): Stats {
+  return structuredClone(
+    runtimeStats.employeeStats[name] ?? {
+      emailsReceived: 0,
+      postsMade: 0,
+      emailsSent: 0,
+      errors: 0,
+    },
+  );
+}

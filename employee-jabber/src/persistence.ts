@@ -1,6 +1,7 @@
 import { EmployeeWithPrompt } from "./models.ts";
 import { employeesWithPrompts } from "./employees.ts";
-import { Client } from "npm:@atcute/client";
+import { Client } from "@atcute/client";
+import { Did } from "@atcute/lexicons";
 
 export type ChatMessage = {
   chatMessageId: string;
@@ -9,7 +10,7 @@ export type ChatMessage = {
 };
 const conversationsByEmail = new Map<string, ChatMessage[]>();
 
-export type ATProtoData = { client: Client; did: string; pdsUri?: string };
+export type ATProtoData = { client: Client; did: Did; pdsUri?: string };
 const atProtoDataByEmail = new Map<string, ATProtoData>();
 
 const employeeByEmail = employeesWithPrompts.reduce((acc, employee) => {

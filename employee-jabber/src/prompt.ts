@@ -1,6 +1,6 @@
-import { z } from "npm:zod/v4";
+import { z } from "zod/v4";
 
-import { enableDebugPrompt, storyline } from "./env.ts";
+import * as Env from "./env.ts";
 import { AiNextActionList } from "./models.ts";
 
 const actionSchema = z.toJSONSchema(AiNextActionList);
@@ -53,11 +53,11 @@ export default `You are at work and are receiving emails from:
 
 The story thus far is:
 
-${storyline}
+${Env.context.storyline}
 
 Your rules are:
 
-${enableDebugPrompt ? debugRules : standardRules}
+${Env.debug.prompt ? debugRules : standardRules}
 
 Responses will be in the form of:
 
